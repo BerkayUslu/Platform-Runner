@@ -13,6 +13,7 @@ namespace PlatformRunner
         [SerializeField] private float _movementSpeed;
         [SerializeField] private float _rotationSpeed;
 
+        private Rigidbody _rigidbody;
         private const float MOVEMENT_THRESHOLD = 0.01f;
         private Transform _transform;
         private Vector2 _rawInput;
@@ -21,6 +22,7 @@ namespace PlatformRunner
 
         private void Awake()
         {
+            _rigidbody = GetComponent<Rigidbody>();
             _transform = transform;
         }
 
