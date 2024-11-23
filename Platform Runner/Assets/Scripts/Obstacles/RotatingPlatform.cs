@@ -12,6 +12,7 @@ namespace PlatformRunner
         [Header("Settings")]
         [SerializeField] private float _halfTurnTime;
         [SerializeField] private float _forceModifier;
+        [SerializeField] private float _velocityModifier;
 
 
         private Transform _transform;
@@ -48,8 +49,11 @@ namespace PlatformRunner
             if (collisionInfo.gameObject.CompareTag("Player"))
             {
                 float force = _forceModifier * _angularSpeed * Time.deltaTime;
-
-                collisionInfo.rigidbody.AddForce(Vector3.left * force, ForceMode.VelocityChange);
+                var normal = collisionInfo.GetContact(0).normal;
+                Vector3 direction = Vector3.Cross(normal, Vector3.forward).normalized;
+                Debug.DrawRay(collisionInfo.transform.position, direction, Color.blue);
+                collisionInfo.rigidbody.AddForce(direction * force, ForceMode.VelocityChange);
+                collisionInfo.rigidbody.velocity = direction * _velocityModifier;
             }
         }
     }
