@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace PlatformRunner
 {
-    public class PlayerAnimator : MonoBehaviour
+    public class EnemyAnimator : MonoBehaviour
     {
         [SerializeField] private Animator _animator;
 
@@ -13,7 +13,6 @@ namespace PlatformRunner
         private int _currentState;
         private readonly int Idle = Animator.StringToHash("Idle");
         private readonly int Running = Animator.StringToHash("Running");
-        private readonly int FlipBackDeath = Animator.StringToHash("FlipBackDeath");
         private readonly int FlyingBackDeath = Animator.StringToHash("FlyingBackDeath");
 
 
@@ -21,7 +20,7 @@ namespace PlatformRunner
         {
             if (!TryGetComponent(out _movementController))
             {
-                Debug.LogWarning("Animator could not find movement controller");
+                Debug.LogWarning("Animator could not find ai movement controller");
                 Destroy(gameObject);
                 return;
             }

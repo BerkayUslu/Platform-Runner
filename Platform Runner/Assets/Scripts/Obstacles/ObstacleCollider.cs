@@ -7,11 +7,19 @@ namespace PlatformRunner
 {
     public class ObstacleCollider : MonoBehaviour
     {
-        [SerializeField] private UnityEvent<Collider> _collided;
+        [SerializeField] private UnityEvent<Collider> _trigerred;
+        [SerializeField] private UnityEvent<Collision> _collided;
 
-        void OnTriggerEnter(Collider collider)
+
+        private void OnTriggerEnter(Collider collider)
         {
-            _collided?.Invoke(collider);
+            _trigerred?.Invoke(collider);
         }
+
+        private void OnCollisionEnter(Collision collision)
+        {
+            _collided?.Invoke(collision);
+        }
+
     }
 }

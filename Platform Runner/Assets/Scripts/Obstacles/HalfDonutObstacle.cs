@@ -42,11 +42,37 @@ namespace PlatformRunner
             _stickAnimationSequence.Play();
         }
 
-        public void CollisionOccuredWithDonut(Collider collider)
+        public void TriggerOfHalfDonutPart(Collider collider) => TriggerOccuredWithHalfDonutPart(collider);
+        public void TriggerOfStickPart(Collider collider) => TouchOccuredWithStickPart(collider);
+        public void CollisionOfStickPart(Collision collision)
         {
-            if (collider.gameObject.CompareTag("Player"))
+            var collider = collision.collider;
+            TouchOccuredWithStickPart(collider);
+        }
+
+        private void TriggerOccuredWithHalfDonutPart(Collider collider)
+        {
+            if (collider.gameObject.CompareTag(Tags.Player) || collider.gameObject.CompareTag(Tags.Enemy))
             {
+                IHealth characterHealth;
+                if (collider.TryGetComponent(out characterHealth))
+                {
+                    characterHealth.KillCharacter();
+                }
+
                 BounceObjectBack(collider.GetComponent<Rigidbody>(), collider.transform.position - _transform.position, _bounceForce);
+            }
+        }
+
+        private void TouchOccuredWithStickPart(Collider collider)
+        {
+            if (collider.gameObject.CompareTag(Tags.Player) || collider.gameObject.CompareTag(Tags.Enemy))
+            {
+                IHealth characterHealth;
+                if (collider.TryGetComponent(out characterHealth))
+                {
+                    characterHealth.KillCharacter();
+                }
             }
         }
 

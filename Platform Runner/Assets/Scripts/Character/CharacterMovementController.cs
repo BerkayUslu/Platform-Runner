@@ -46,6 +46,11 @@ namespace PlatformRunner
             _health.Died += StopMovement;
         }
 
+        private void OnDisable()
+        {
+            _health.Died -= StopMovement;
+        }
+
         private void FixedUpdate()
         {
             if (!_canMove)
