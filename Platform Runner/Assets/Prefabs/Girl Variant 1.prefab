@@ -13,7 +13,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 70a47eada95b1467d9a2b6ef977ea4a5, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -2.91
+      value: -0.97
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 70a47eada95b1467d9a2b6ef977ea4a5, type: 3}
       propertyPath: m_LocalPosition.y
@@ -21,7 +21,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 70a47eada95b1467d9a2b6ef977ea4a5, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 1.17
+      value: 24.03
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 70a47eada95b1467d9a2b6ef977ea4a5, type: 3}
       propertyPath: m_LocalRotation.w
@@ -57,7 +57,7 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 4f97d426f0c0f45dbb24f9ec497f4910, type: 2}
     - target: {fileID: 919132149155446097, guid: 70a47eada95b1467d9a2b6ef977ea4a5, type: 3}
       propertyPath: m_Name
-      value: Girl Variant 1
+      value: Girl
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 70a47eada95b1467d9a2b6ef977ea4a5, type: 3}
       propertyPath: m_TagString
@@ -97,9 +97,9 @@ CapsuleCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   m_Radius: 0.36341834
-  m_Height: 2.700132
+  m_Height: 2.5667148
   m_Direction: 1
-  m_Center: {x: 0, y: 1.1322918, z: 0.026838064}
+  m_Center: {x: 0, y: 1.1990004, z: 0.026838064}
 --- !u!95 &954703727
 Animator:
   serializedVersion: 5
@@ -135,7 +135,7 @@ NavMeshAgent:
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
-  m_StoppingDistance: 0
+  m_StoppingDistance: 0.55
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
@@ -168,7 +168,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _navMeshAgent: {fileID: 954703723}
-  _characterHealth: {fileID: 954703724}
+  _capsuleCollider: {fileID: 954703722}
 --- !u!114 &954703728
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -195,3 +195,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _animator: {fileID: 954703727}
+--- !u!114 &954703730
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4357002607509480899}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30c278fef57c342d792431b1a6d0763e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

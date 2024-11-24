@@ -32,6 +32,23 @@ namespace PlatformRunner
         }
 
         public void TriggerOfRotatingStick(Collider collider, Transform pointOnStick) => TriggerOccuredWithRotatingStick(collider, pointOnStick);
+        public void TriggerOfRotator(Collider collider) => TouchOccuredWithRotator(collider);
+        public void CollisionOfRotator(Collision collision)
+        {
+            TouchOccuredWithRotator(collision.collider);
+        }
+
+        private void TouchOccuredWithRotator(Collider collider)
+        {
+            if (collider.gameObject.CompareTag(Tags.Player) || collider.gameObject.CompareTag(Tags.Enemy))
+            {
+                IHealth characterHealth;
+                if (collider.TryGetComponent(out characterHealth))
+                {
+                    characterHealth.KillCharacter();
+                }
+            }
+        }
 
         private void TriggerOccuredWithRotatingStick(Collider collider, Transform pointOnStick)
         {
@@ -61,27 +78,6 @@ namespace PlatformRunner
             direction = direction.normalized;
             rigidbody.velocity = direction;
             rigidbody.AddForce(direction * force, ForceMode.Impulse);
-        }
-
-        public static void DrawRayWithArrow(Vector3 start, Vector3 direction, Color color, float duration = 0.0f)
-        {
-            // Draw the main ray
-            Debug.DrawRay(start, direction, color, duration);
-
-            // Calculate the end point of the ray
-            Vector3 end = start + direction;
-
-            // Make arrow head size proportional to the direction length
-            float arrowLength = direction.magnitude * 0.2f; // 20% of the ray length
-            float arrowAngle = 20.0f;
-
-            // Calculate the arrow head points
-            Vector3 right = Quaternion.LookRotation(direction) * Quaternion.Euler(0, 180 + arrowAngle, 0) * Vector3.forward;
-            Vector3 left = Quaternion.LookRotation(direction) * Quaternion.Euler(0, 180 - arrowAngle, 0) * Vector3.forward;
-
-            // Draw the arrow head lines
-            Debug.DrawRay(end, right * arrowLength, color, duration);
-            Debug.DrawRay(end, left * arrowLength, color, duration);
         }
     }
 }
