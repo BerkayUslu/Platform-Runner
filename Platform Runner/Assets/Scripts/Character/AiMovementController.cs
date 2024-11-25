@@ -15,10 +15,9 @@ namespace PlatformRunner
 
         private bool _isMoving = false;
 
-
         private void FixedUpdate()
         {
-            if (!_isMoving)
+            if (!_isMoving || !_navMeshAgent.enabled)
                 return;
 
             if (_navMeshAgent.hasPath && _navMeshAgent.remainingDistance <= _navMeshAgent.stoppingDistance)
@@ -26,6 +25,7 @@ namespace PlatformRunner
                 _navMeshAgent.isStopped = true;
                 _navMeshAgent.velocity = Vector3.zero;
                 StopMovement();
+                return;
             }
         }
 

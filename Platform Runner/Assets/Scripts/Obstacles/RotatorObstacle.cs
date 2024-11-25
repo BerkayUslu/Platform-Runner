@@ -10,6 +10,7 @@ namespace PlatformRunner
         [Header("Settings")]
         [SerializeField] private float _bounceForce = 10;
         [SerializeField] private float _halfTurnTime;
+        [SerializeField] private bool _spinReverse;
 
         private float _halfTurn = 180;
         private Transform _transform;
@@ -21,6 +22,9 @@ namespace PlatformRunner
 
         private void Start()
         {
+            if (_spinReverse)
+                _halfTurn = -_halfTurn;
+                
             _transform = transform;
             RotatePlatform();
         }

@@ -24,7 +24,7 @@ namespace PlatformRunner
         private void MoveBetweenTargets()
         {
             _leftRightMovementSequence = DOTween.Sequence();
-            _transform.SetX(_targetXPositionTwo);
+            _transform.SetX(_transform.position.x + _targetXPositionTwo);
 
             _leftRightMovementSequence
                 .Append(_transform.DOMoveX(_targetXPositionOne, _moveTime));
@@ -41,7 +41,6 @@ namespace PlatformRunner
 
         private void OnCollisionEnter(Collision collision)
         {
-            Debug.Log("Here");
             OnTouch(collision.collider);
         }
 

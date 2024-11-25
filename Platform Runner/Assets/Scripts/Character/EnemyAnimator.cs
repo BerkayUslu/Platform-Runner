@@ -36,7 +36,7 @@ namespace PlatformRunner
             _movementController.Moved += () => ChangeAnimationState(Running);
             _health.Died += () => ChangeAnimationState(FlyingBackDeath);
 
-            ChangeAnimationState(Idle);
+            ChangeAnimationState(Running);
         }
 
         private void OnDisable()
