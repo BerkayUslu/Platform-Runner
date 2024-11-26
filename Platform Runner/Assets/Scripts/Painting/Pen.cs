@@ -7,13 +7,14 @@ namespace PlatformRunner
     public class Pen : MonoBehaviour
     {
         [Header("Brush Settings")]
-        [SerializeField] private int penSize = 5;
+        [SerializeField] private int _basePenSize = 100;
+        [SerializeField] private int _maxPenSize = 300;
         [SerializeField] private Color drawColor = Color.black;
-        [SerializeField] private float brushHardness = 1f;
 
         [Header("UI References")]
         [SerializeField] private TextMeshProUGUI percentageText;
 
+        private int penSize;
         private PaintingBoard board;
         private Color[] colors;
         private Vector2 lastDrawPosition;
@@ -24,6 +25,7 @@ namespace PlatformRunner
 
         private void Start()
         {
+            penSize = _basePenSize;
             board = GetComponent<PaintingBoard>();
             GenerateCircularBrush();
         }
@@ -50,7 +52,6 @@ namespace PlatformRunner
                             alpha = 1f - (distance - (radius - 1));
                         }
 
-                        alpha = Mathf.Pow(alpha, 1f / brushHardness);
                         colors[index] = new Color(drawColor.r, drawColor.g, drawColor.b, drawColor.a * alpha);
                     }
                     else
@@ -64,7 +65,7 @@ namespace PlatformRunner
         private void Update()
         {
             HandleTouchInput();
-            
+
             updateTimer += Time.deltaTime;
             if (updateTimer >= UPDATE_INTERVAL)
             {
@@ -206,6 +207,14 @@ namespace PlatformRunner
                 float percentage = board.GetPaintedPercentage();
                 percentageText.text = $"Painted: {percentage:F1}%";
             }
+        }
+
+        public void ChangePenSize(float value)
+        {
+            value = Mathf.Clamp01(value);
+            int addedSize = (int)((_maxPenSize - _basePenSize) * value);
+            int size = _basePenSize + addedSize;
+            SetPenSize(size);
         }
 
         public void SetPenColor(Color newColor)

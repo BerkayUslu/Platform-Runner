@@ -1,3 +1,4 @@
+// PaintingBoard.cs
 using UnityEngine;
 
 namespace PlatformRunner
@@ -7,10 +8,13 @@ namespace PlatformRunner
         public Texture2D texture;
         public Vector2 textureSize = new Vector2(2048, 2048);
         public Camera mainCamera;
-
+        
+        [SerializeField] private float alphaThreshold = 0.95f;
+        
         private int totalPixels;
         private int paintedPixels;
-        private Color[] pixelStates;
+        private bool[] pixelPaintedState;
+        private Color[] pixelColors;
 
         private void Start()
         {
@@ -27,7 +31,8 @@ namespace PlatformRunner
         private void InitializeTracking()
         {
             totalPixels = (int)(textureSize.x * textureSize.y);
-            pixelStates = new Color[totalPixels];
+            pixelPaintedState = new bool[totalPixels];
+            pixelColors = new Color[totalPixels];
             paintedPixels = 0;
         }
 
@@ -57,12 +62,19 @@ namespace PlatformRunner
                     int texIndex = (y + py) * (int)textureSize.x + (x + px);
                     int colorIndex = py * width + px;
 
-                    if (texIndex >= 0 && texIndex < totalPixels &&
-                        colors[colorIndex].a > 0.1f &&
-                        pixelStates[texIndex].a < 0.1f)
+                    if (texIndex >= 0 && texIndex < totalPixels && colorIndex < colors.Length)
                     {
-                        paintedPixels++;
-                        pixelStates[texIndex] = Color.white;
+                        Color newColor = colors[colorIndex];
+                        Color currentColor = pixelColors[texIndex];
+                        
+                        Color blendedColor = Color.Lerp(currentColor, newColor, newColor.a);
+                        pixelColors[texIndex] = blendedColor;
+
+                        if (blendedColor.a >= alphaThreshold && !pixelPaintedState[texIndex])
+                        {
+                            pixelPaintedState[texIndex] = true;
+                            paintedPixels++;
+                        }
                     }
                 }
             }
@@ -70,16 +82,43 @@ namespace PlatformRunner
 
         public float GetPaintedPercentage()
         {
-            return (float)paintedPixels / totalPixels * 100f;
+            float percentage = (float)paintedPixels / totalPixels * 100f;
+            float remainingPixels = totalPixels - paintedPixels;
+            
+            if (remainingPixels <= totalPixels * 0.001f)
+            {
+                bool hasUnpaintedPixels = false;
+                for (int i = 0; i < pixelColors.Length; i++)
+                {
+                    if (pixelColors[i].a < alphaThreshold)
+                    {
+                        hasUnpaintedPixels = true;
+                        break;
+                    }
+                }
+                
+                if (!hasUnpaintedPixels)
+                    return 100f;
+            }
+            
+            return percentage;
+        }
+
+        public bool IsFullyPainted()
+        {
+            for (int i = 0; i < pixelColors.Length; i++)
+            {
+                if (pixelColors[i].a < alphaThreshold)
+                    return false;
+            }
+            return true;
         }
 
         public void ResetPaintedArea()
         {
             paintedPixels = 0;
-            for (int i = 0; i < pixelStates.Length; i++)
-            {
-                pixelStates[i] = Color.clear;
-            }
+            System.Array.Clear(pixelPaintedState, 0, pixelPaintedState.Length);
+            System.Array.Clear(pixelColors, 0, pixelColors.Length);
         }
     }
 }
