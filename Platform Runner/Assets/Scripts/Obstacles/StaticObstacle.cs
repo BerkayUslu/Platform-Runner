@@ -11,7 +11,7 @@ namespace PlatformRunner
             OnTouch(collider);
         }
 
-        private void OnCollisiontEnter(Collision collision)
+        private void OnCollisionEnter(Collision collision)
         {
             OnTouch(collision.collider);
         }
