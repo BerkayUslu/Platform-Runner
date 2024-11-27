@@ -10,5 +10,6 @@ namespace PlatformRunner
         public static readonly string Enemy = "Enemy";
         public static readonly string DeadlyObstacle = "DeadlyObstacle";
         public static readonly string RotatingPlatform = "RotatingPlatform";
+        public static readonly string CoinAmountImage = "CoinAmountImage";
     }
 }

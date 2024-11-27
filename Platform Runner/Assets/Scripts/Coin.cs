@@ -14,8 +14,6 @@ namespace PlatformRunner
 
         private float _halfTurn = 180;
         private Transform _transform;
-        private CoinAnimation _coinAnimation;
-
         private void Start()
         {
             if (_spinReverse)
@@ -24,7 +22,6 @@ namespace PlatformRunner
             _transform = transform;
             RotateCoin();
 
-            _coinAnimation = FindObjectOfType<CoinAnimation>();
         }
 
         private void RotateCoin()
@@ -38,15 +35,10 @@ namespace PlatformRunner
         {
             if (collider.CompareTag(Tags.Player))
             {
-                if (_coinAnimation == null)
-                {
-                    Debug.LogError("Coin animation not found");
-                    return;
-                }
-                _coinAnimation.PlayCoinAnimation();
+                CoinAnimationsManager.Instance.PlayCoinAnimation();
+                PlayerStatsManager.Instance.AddCoinWithDelay(1.5f);
                 gameObject.SetActive(false);
             }
         }
-
     }
 }

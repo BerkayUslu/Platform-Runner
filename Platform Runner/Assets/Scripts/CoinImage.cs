@@ -17,7 +17,7 @@ namespace PlatformRunner
             _initialPosition = _rectTransform.position;
         }
 
-        public void Animate(int index, Vector2 firstTargetPosition, float firstTargetTime, Vector2 _coinAmountTargetPosition, float _coinAmountTargetTime)
+        public Sequence Animate(int index, Vector2 firstTargetPosition, float firstTargetTime, Vector2 _coinAmountTargetPosition, float _coinAmountTargetTime)
         {
             Sequence sequence = DOTween.Sequence();
 
@@ -31,6 +31,8 @@ namespace PlatformRunner
             sequence.Append(_rectTransform.DOJump(_coinAmountTargetPosition, 200, 1, _coinAmountTargetTime));
 
             sequence.Join(_rectTransform.DOScale(1f, _coinAmountTargetTime));
+
+            return sequence.Play();
         }
 
         public void Reset()

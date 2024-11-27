@@ -1,12 +1,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.AI;
 
 namespace PlatformRunner
 {
-    public class CharacterMovementController : MonoBehaviour, IMovementController
+    public class CharacterMovementController : MonoBehaviour, IMovementController, ITweenMovement
     {
         [Header("References")]
         [SerializeField] private Joystick _joystick;
@@ -15,8 +16,6 @@ namespace PlatformRunner
         [SerializeField] private float _movementSpeed;
         [SerializeField] private float _rotationSpeed;
 
-        private IHealth _health;
-        private Rigidbody _rigidbody;
         private const float MOVEMENT_THRESHOLD = 0.1f;
         private Transform _transform;
         private Vector2 _rawInput;
@@ -30,30 +29,12 @@ namespace PlatformRunner
 
         private void Awake()
         {
-            _rigidbody = GetComponent<Rigidbody>();
             _transform = transform;
-        }
-
-        private void Start()
-        {
-            if (!TryGetComponent(out _health))
-            {
-                Debug.LogWarning("CharacterMovementController could not find health");
-                Destroy(gameObject);
-                return;
-            }
-
-            _health.Died += StopMovement;
-        }
-
-        private void OnDisable()
-        {
-            _health.Died -= StopMovement;
         }
 
         private void FixedUpdate()
         {
-            if (!_canMove || _joystick == null)
+            if (!_canMove || _joystick == null)
                 return;
 
             _rawInput = _joystick.Direction;
@@ -103,6 +84,14 @@ namespace PlatformRunner
         public void StopMovement()
         {
             _canMove = false;
+        }
+
+        public Tween MoveToPosition(Vector3 position, float time)
+        {
+            return _transform.DOMove(new Vector3(position.x, 0, position.z), time).OnComplete(() =>
+            {
+                this.Stopped?.Invoke();
+            });
         }
     }
 }

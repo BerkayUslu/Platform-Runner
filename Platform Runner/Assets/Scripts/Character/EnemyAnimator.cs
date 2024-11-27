@@ -10,10 +10,11 @@ namespace PlatformRunner
 
         private IMovementController _movementController;
         private IHealth _health;
-        private int _currentState;
+        public int _currentState;
         private readonly int Idle = Animator.StringToHash("Idle");
         private readonly int Running = Animator.StringToHash("Running");
         private readonly int FlyingBackDeath = Animator.StringToHash("FlyingBackDeath");
+        private readonly int EnemyDance = Animator.StringToHash("EnemyDance");
 
 
         private void Start()
@@ -32,11 +33,11 @@ namespace PlatformRunner
                 return;
             }
 
-            _movementController.Stopped += () => ChangeAnimationState(Idle);
+            _movementController.Stopped += () => ChangeAnimationState(EnemyDance);
             _movementController.Moved += () => ChangeAnimationState(Running);
             _health.Died += () => ChangeAnimationState(FlyingBackDeath);
 
-            ChangeAnimationState(Running);
+            ChangeAnimationState(Idle);
         }
 
         private void OnDisable()
@@ -51,7 +52,6 @@ namespace PlatformRunner
         {
             if (_currentState == stateHash)
                 return;
-
             _animator.CrossFade(stateHash, 0);
             _currentState = stateHash;
         }
