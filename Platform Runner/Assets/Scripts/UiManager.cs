@@ -1,50 +1,50 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.Collections.LowLevel.Unsafe;
+using PlatformRunner.Core;
 using UnityEngine;
 
-namespace PlatformRunner
+namespace PlatformRunner.UI
 {
     public class UiManager : MonoBehaviour
     {
-        public static UiManager Instance;
+        [Header("Canvas References")]
         [SerializeField] private GameObject _startMenu;
         [SerializeField] private GameObject _inGameUI;
         [SerializeField] private GameObject _joystickUI;
         [SerializeField] private GameObject _paintingUI;
 
-        [SerializeField] private PositionText _positionText;
-        [SerializeField] private CoinAmountUI _coinAmountText;
+        private GameObject[] _uiElements;
 
         private void Awake()
         {
-            if (Instance == null)
+            _uiElements = new[] { _startMenu, _inGameUI, _joystickUI, _paintingUI };
+        }
+        
+        public void HideAll()
+        {
+            foreach (var element in _uiElements)
             {
-                Instance = this;
-            }
-            else
-            {
-                Destroy(gameObject);
-                return;
+                element.SetActive(false);
             }
         }
 
-        private void Start()
+        public void ShowMenu()
         {
-            GameManager.GameStateChanged += OnGameStateChanged;
+            HideAll();
+            _startMenu.SetActive(true);
         }
 
-        private void OnDestroy()
+        public void ShowInGame()
         {
-            GameManager.GameStateChanged -= OnGameStateChanged;
+            HideAll();
+            _inGameUI.SetActive(true);
+            _joystickUI.SetActive(true);
         }
 
-        private void OnGameStateChanged(GameState state)
+        public void ShowPainting()
         {
-            _startMenu.SetActive(state == GameState.StartMenu);
-            _inGameUI.SetActive(state == GameState.RunningGame);
-            _joystickUI.SetActive(state == GameState.RunningGame);
-            _paintingUI.SetActive(state == GameState.WallPainting);
+            HideAll();
+            _paintingUI.SetActive(true);
         }
     }
 }

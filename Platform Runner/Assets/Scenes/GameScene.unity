@@ -11002,6 +11002,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b90b22f2636094cfca987629c427a0d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _player: {fileID: 7800632410580246521}
+  _uiManager: {fileID: 1665915767}
+  _cameraManager: {fileID: 231557577}
+  _enemyUnits: {fileID: 307284163}
+  _paintingPosition: {fileID: 1142616141}
 --- !u!4 &707988795
 Transform:
   m_ObjectHideFlags: 0
@@ -11028,7 +11033,7 @@ GameObject:
   - component: {fileID: 764646950}
   - component: {fileID: 764646949}
   m_Layer: 0
-  m_Name: RunningRacePositionTracking
+  m_Name: Running Race Position Tracking
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -13713,8 +13718,6 @@ MonoBehaviour:
   _inGameUI: {fileID: 2118547649}
   _joystickUI: {fileID: 412076026}
   _paintingUI: {fileID: 356978250}
-  _positionText: {fileID: 1099284061}
-  _coinAmountText: {fileID: 1332155959}
 --- !u!4 &1665915768
 Transform:
   m_ObjectHideFlags: 0
@@ -20547,10 +20550,26 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1142975428, guid: b39c00172f19f44ddb9321e07e54faac, type: 3}
+      propertyPath: _health
+      value: 
+      objectReference: {fileID: 7800632410580246527}
+    - target: {fileID: 1142975428, guid: b39c00172f19f44ddb9321e07e54faac, type: 3}
+      propertyPath: _movementController
+      value: 
+      objectReference: {fileID: 7800632410580246522}
+    - target: {fileID: 1142975433, guid: b39c00172f19f44ddb9321e07e54faac, type: 3}
+      propertyPath: _health
+      value: 
+      objectReference: {fileID: 7800632410580246527}
     - target: {fileID: 1142975433, guid: b39c00172f19f44ddb9321e07e54faac, type: 3}
       propertyPath: _paintingPosition
       value: 
       objectReference: {fileID: 1142616141}
+    - target: {fileID: 1142975433, guid: b39c00172f19f44ddb9321e07e54faac, type: 3}
+      propertyPath: _movementController
+      value: 
+      objectReference: {fileID: 7800632410580246522}
     - target: {fileID: 6953557862076189652, guid: b39c00172f19f44ddb9321e07e54faac, type: 3}
       propertyPath: m_Name
       value: Boy
@@ -20605,6 +20624,41 @@ PrefabInstance:
       objectReference: {fileID: 813310964}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b39c00172f19f44ddb9321e07e54faac, type: 3}
+--- !u!114 &7800632410580246521 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1142975433, guid: b39c00172f19f44ddb9321e07e54faac, type: 3}
+  m_PrefabInstance: {fileID: 7800632410580246520}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1530239905}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae2a53844b2e44ad887200c5ce9561d0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &7800632410580246522 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7800632410580246522, guid: b39c00172f19f44ddb9321e07e54faac, type: 3}
+  m_PrefabInstance: {fileID: 7800632410580246520}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1530239905}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5de6e13bc89454f45897b31db68b0141, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &7800632410580246527
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1530239905}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2dcd6e4c617964dce97f7606b4cc4d60, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _respawnDelay: 1.5
 --- !u!4 &8906305810855089924
 Transform:
   m_ObjectHideFlags: 0

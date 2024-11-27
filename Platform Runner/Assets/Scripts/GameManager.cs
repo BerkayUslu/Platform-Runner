@@ -1,18 +1,27 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using PlatformRunner.Core.StateMachine;
+using PlatformRunner.Player;
+using PlatformRunner.UI;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
-namespace PlatformRunner
+namespace PlatformRunner.Core
 {
     public class GameManager : MonoBehaviour
     {
         public static GameManager Instance;
+        private GameStateMachine _stateMachine;
 
-        private GameState _state;
-        public GameState State { get { return _state; } }
+        [Header("Script References")]
+        [SerializeField] private PlayerController _player;
+        [SerializeField] private UiManager _uiManager;
+        [SerializeField] private CameraManager _cameraManager;
+        [SerializeField] private EnemyUnitsManager _enemyUnits;
+        [Header("State Settings")]
+        [SerializeField] private Transform _paintingPosition;
 
-        public static event Action<GameState> GameStateChanged;
 
         private void Awake()
         {
@@ -27,53 +36,33 @@ namespace PlatformRunner
 
         private void Start()
         {
-            StartCoroutine(InitialStartWithDelay(0.5f));
+            _stateMachine = new GameStateMachine();
+            AddStatesToStateMachine();
+            ChangeState<MenuState>();
         }
 
-        private IEnumerator InitialStartWithDelay(float delay)
+        private void AddStatesToStateMachine()
         {
-            yield return new WaitForSeconds(delay);
-            ChangeGameState(GameState.StartMenu);
+            _stateMachine.AddState(new MenuState(_uiManager));
+            _stateMachine.AddState(new RunningState(_uiManager, _player, _enemyUnits));
+            _stateMachine.AddState(new RaceEndState(_player, _paintingPosition));
+            _stateMachine.AddState(new PaintingState(_uiManager, _cameraManager));
         }
 
-        public void ChangeGameState(GameState state)
+        public void ChangeState<T>() where T : IGameState
         {
-            _state = state;
-
-            switch (state)
-            {
-                case GameState.StartMenu:
-                    break;
-                case GameState.RunningGame:
-                    break;
-                case GameState.WallPainting:
-                    break;
-                case GameState.Restart:
-                    break;
-                case GameState.RunningGameFinish:
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(state), state, $"No implementation of {state} is found");
-            }
-
-            GameStateChanged?.Invoke(state);
+            _stateMachine.ChangeState<T>();
         }
-
 
         public void StartGame()
         {
-            ChangeGameState(GameState.RunningGame);
+            _stateMachine.ChangeState<RunningState>();
         }
 
-    }
+        public void RestartCurrentScene()
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
 
-    [Serializable]
-    public enum GameState
-    {
-        StartMenu,
-        RunningGame,
-        RunningGameFinish,
-        WallPainting,
-        Restart
     }
 }

@@ -5,9 +5,9 @@ using DG.Tweening;
 using UnityEngine;
 using UnityEngine.AI;
 
-namespace PlatformRunner
+namespace PlatformRunner.Player
 {
-    public class CharacterMovementController : MonoBehaviour, IMovementController, ITweenMovement
+    public class PlayerMovementController : MonoBehaviour, IMovementController, ITweenMovement
     {
         [Header("References")]
         [SerializeField] private Joystick _joystick;

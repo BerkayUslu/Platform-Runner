@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using PlatformRunner.Core;
+using PlatformRunner.Core.StateMachine;
 
 namespace PlatformRunner
 {
@@ -10,7 +12,7 @@ namespace PlatformRunner
         {
             if (collider.CompareTag(Tags.Player))
             {
-                GameManager.Instance.ChangeGameState(GameState.RunningGameFinish);
+                GameManager.Instance.ChangeState<RaceEndState>();
             }
         }
     }

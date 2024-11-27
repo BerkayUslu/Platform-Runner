@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Cinemachine;
 using UnityEngine;
+using PlatformRunner.Core;
 
 namespace PlatformRunner
 {
@@ -10,20 +11,9 @@ namespace PlatformRunner
         [SerializeField] private CinemachineVirtualCamera _gameCamera;
         [SerializeField] private CinemachineVirtualCamera _paintingCamera;
 
-        private void Start()
+        public void DeactivateGameCamera()
         {
-            GameManager.GameStateChanged += OnGameStateChanged;
-        }
-
-        private void OnDestroy()
-        {
-            GameManager.GameStateChanged -= OnGameStateChanged;
-        }
-
-        private void OnGameStateChanged(GameState state)
-        {
-            if (state == GameState.WallPainting)
-                _gameCamera.gameObject.SetActive(false);
+            _gameCamera.gameObject.SetActive(false);
         }
     }
 }

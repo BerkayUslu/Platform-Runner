@@ -1,5 +1,5 @@
 using System.Collections;
-using System.Collections.Generic;
+using PlatformRunner.Core;
 using UnityEngine;
 
 namespace PlatformRunner
@@ -8,26 +8,7 @@ namespace PlatformRunner
     {
         public EnemyController[] _enemyControllers;
 
-        private void Start()
-        {
-            GameManager.GameStateChanged += OnGameStateChanged;
-        }
-
-        private void OnDestroy()
-        {
-            GameManager.GameStateChanged -= OnGameStateChanged;
-        }
-
-        private void OnGameStateChanged(GameState state)
-        {
-            if (state == GameState.RunningGame)
-            {
-                InitiateTheEnemeyUnits();
-            }
-
-        }
-
-        private void InitiateTheEnemeyUnits()
+        public void InitiateTheEnemeyUnits()
         {
             Vector3 targetPosition = FindObjectOfType<DestinationObject>().GetPosition();
 

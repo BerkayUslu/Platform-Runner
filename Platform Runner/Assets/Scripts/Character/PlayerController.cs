@@ -1,18 +1,15 @@
-using System;
-using System.Collections;
-using DG.Tweening;
 using UnityEngine;
-using UnityEngine.SceneManagement;
+using DG.Tweening;
+using PlatformRunner.Core;
+using PlatformRunner.Player;
+using PlatformRunner.Core.StateMachine;
 
-namespace PlatformRunner
+namespace PlatformRunner.Player
 {
-    public class PlayerController : MonoBehaviour, IHealth
+    public class PlayerController : MonoBehaviour
     {
-        private IMovementController _movementController;
-        [SerializeField] private Transform _paintingPosition;
-        private bool _isDead = false;
-        public bool IsDead { get { return _isDead; } }
-        public event Action Died;
+        [SerializeField] private PlayerHealth _health;
+        [SerializeField] private PlayerMovementController _movementController;
 
         private void Start()
         {
@@ -23,52 +20,32 @@ namespace PlatformRunner
                 return;
             }
 
-            GameManager.GameStateChanged += OnGameStateChanged;
+            _health.Died += OnPlayerDeath;
         }
 
         private void OnDestroy()
         {
-            GameManager.GameStateChanged -= OnGameStateChanged;
+            _health.Died -= OnPlayerDeath;
         }
 
-        public void KillCharacter()
+        private void OnPlayerDeath()
         {
-            if (!_isDead)
-                Died?.Invoke();
-
             _movementController.StopMovement();
-            _isDead = true;
-
-            PlayerStatsManager.Instance.IncreaseFail();
-            StartCoroutine(RestartGameAfterDeath(1.5f));
         }
 
-        private IEnumerator RestartGameAfterDeath(float delay)
+        public void StopMovement()
         {
-            yield return new WaitForSeconds(delay);
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            _movementController.StopMovement();
         }
 
-        private void OnGameStateChanged(GameState state)
+        public void MoveToPaintingPosition(Vector3 position)
         {
-
-            if (state == GameState.RunningGameFinish)
+            if (_movementController is ITweenMovement tweenMovement)
             {
-                _movementController.StopMovement();
-
-                if (_movementController is ITweenMovement tweenMovement)
-                {
-                    tweenMovement.MoveToPosition(_paintingPosition.position, 6)
-                        .OnKill(() =>
-                        {
-                            GameManager.Instance.ChangeGameState(GameState.WallPainting);
-                        }).SetEase(Ease.Linear);
-                }
+                tweenMovement.MoveToPosition(position, 6)
+                    .OnKill(() => GameManager.Instance.ChangeState<PaintingState>())
+                    .SetEase(Ease.Linear);
             }
-
-            if (state == GameState.WallPainting)
-                _movementController.StopMovement();
-
         }
     }
 }
