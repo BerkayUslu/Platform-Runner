@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Linq;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 namespace PlatformRunner
 {
@@ -22,12 +23,19 @@ namespace PlatformRunner
         private bool isFirstTouch = true;
         private float updateTimer = 0f;
         private const float UPDATE_INTERVAL = 0.1f;
+        private bool _drawable = false;
 
         private void Start()
         {
             penSize = _basePenSize;
             board = GetComponent<PaintingBoard>();
             GenerateCircularBrush();
+            GameManager.GameStateChanged += OnGameStateChanged;
+        }
+
+        private void OnDestroy()
+        {
+            GameManager.GameStateChanged -= OnGameStateChanged;
         }
 
         private void GenerateCircularBrush()
@@ -64,12 +72,21 @@ namespace PlatformRunner
 
         private void Update()
         {
+            if (!_drawable)
+                return;
+
             HandleTouchInput();
 
             updateTimer += Time.deltaTime;
             if (updateTimer >= UPDATE_INTERVAL)
             {
-                UpdatePercentageDisplay();
+                float percentage = board.GetPaintedPercentage();
+                UpdatePercentageDisplay(percentage);
+                Debug.Log(percentage);
+                if (percentage >= 100)
+                {
+                    SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+                }
                 updateTimer = 0f;
             }
         }
@@ -200,11 +217,10 @@ namespace PlatformRunner
             }
         }
 
-        private void UpdatePercentageDisplay()
+        private void UpdatePercentageDisplay(float percentage)
         {
             if (percentageText != null)
             {
-                float percentage = board.GetPaintedPercentage();
                 percentageText.text = $"Painted: {percentage:F1}%";
             }
         }
@@ -227,6 +243,11 @@ namespace PlatformRunner
         {
             penSize = Mathf.Max(1, newSize);
             GenerateCircularBrush();
+        }
+
+        private void OnGameStateChanged(GameState state)
+        {
+            _drawable = state == GameState.WallPainting;
         }
     }
 }

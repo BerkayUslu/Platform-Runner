@@ -85,17 +85,9 @@ namespace PlatformRunner
             float percentage = (float)paintedPixels / totalPixels * 100f;
             float remainingPixels = totalPixels - paintedPixels;
             
-            if (remainingPixels <= totalPixels * 0.001f)
+            if (remainingPixels <= totalPixels * 0.005f)
             {
                 bool hasUnpaintedPixels = false;
-                for (int i = 0; i < pixelColors.Length; i++)
-                {
-                    if (pixelColors[i].a < alphaThreshold)
-                    {
-                        hasUnpaintedPixels = true;
-                        break;
-                    }
-                }
                 
                 if (!hasUnpaintedPixels)
                     return 100f;
