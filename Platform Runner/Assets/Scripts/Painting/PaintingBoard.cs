@@ -5,41 +5,45 @@ namespace PlatformRunner
 {
     public class PaintingBoard : MonoBehaviour
     {
-        public Texture2D texture;
-        public Vector2 textureSize = new Vector2(2048, 2048);
-        public Camera mainCamera;
-        
-        [SerializeField] private float alphaThreshold = 0.95f;
-        
-        private int totalPixels;
-        private int paintedPixels;
-        private bool[] pixelPaintedState;
-        private Color[] pixelColors;
+        [SerializeField] private Vector2 _textureSize = new Vector2(2048, 2048);
+        public Vector2 TextureSize { get => _textureSize; }
+
+        [SerializeField] private float _alphaThreshold = 0.95f;
+
+        private Texture2D _texture;
+        public Texture2D Texture { get => _texture; }
+
+        private float _percentageTreshold = 99.8f;
+        private Camera _mainCamera;
+        private int _totalPixels;
+        private int _paintedPixels;
+        private bool[] _pixelPaintedState;
+        private Color[] _pixelColors;
+
 
         private void Start()
         {
             var r = GetComponent<Renderer>();
-            texture = new Texture2D((int)textureSize.x, (int)textureSize.y);
-            r.material.mainTexture = texture;
+            _texture = new Texture2D((int)TextureSize.x, (int)TextureSize.y);
+            r.material.mainTexture = Texture;
 
-            if (mainCamera == null)
-                mainCamera = Camera.main;
+            _mainCamera = Camera.main;
 
             InitializeTracking();
         }
 
         private void InitializeTracking()
         {
-            totalPixels = (int)(textureSize.x * textureSize.y);
-            pixelPaintedState = new bool[totalPixels];
-            pixelColors = new Color[totalPixels];
-            paintedPixels = 0;
+            _totalPixels = (int)(TextureSize.x * TextureSize.y);
+            _pixelPaintedState = new bool[_totalPixels];
+            _pixelColors = new Color[_totalPixels];
+            _paintedPixels = 0;
         }
 
         public bool ScreenToTexturePoint(Vector2 screenPos, out Vector2 texturePos)
         {
             texturePos = Vector2.zero;
-            Ray ray = mainCamera.ScreenPointToRay(screenPos);
+            Ray ray = _mainCamera.ScreenPointToRay(screenPos);
             RaycastHit hit;
 
             if (Physics.Raycast(ray, out hit) && hit.transform == transform)
@@ -52,63 +56,50 @@ namespace PlatformRunner
 
         public void UpdatePaintedArea(int x, int y, int width, int height, Color[] colors)
         {
-            if (x < 0 || y < 0 || x + width > textureSize.x || y + height > textureSize.y)
+            if (x < 0 || y < 0 || x + width > TextureSize.x || y + height > TextureSize.y)
                 return;
 
             for (int py = 0; py < height; py++)
             {
                 for (int px = 0; px < width; px++)
                 {
-                    int texIndex = (y + py) * (int)textureSize.x + (x + px);
+                    int texIndex = (y + py) * (int)TextureSize.x + (x + px);
                     int colorIndex = py * width + px;
 
-                    if (texIndex >= 0 && texIndex < totalPixels && colorIndex < colors.Length)
+                    if (texIndex >= 0 && texIndex < _totalPixels && colorIndex < colors.Length)
                     {
                         Color newColor = colors[colorIndex];
-                        Color currentColor = pixelColors[texIndex];
-                        
-                        Color blendedColor = Color.Lerp(currentColor, newColor, newColor.a);
-                        pixelColors[texIndex] = blendedColor;
+                        Color currentColor = _pixelColors[texIndex];
 
-                        if (blendedColor.a >= alphaThreshold && !pixelPaintedState[texIndex])
+                        Color blendedColor = Color.Lerp(currentColor, newColor, newColor.a);
+                        _pixelColors[texIndex] = blendedColor;
+
+                        if (blendedColor.a >= _alphaThreshold && !_pixelPaintedState[texIndex])
                         {
-                            pixelPaintedState[texIndex] = true;
-                            paintedPixels++;
+                            _pixelPaintedState[texIndex] = true;
+                            _paintedPixels++;
                         }
                     }
                 }
             }
+            PaintingManager.Instance.PaintingProgressChanged(GetPaintedPercentage());
         }
 
         public float GetPaintedPercentage()
         {
-            float percentage = (float)paintedPixels / totalPixels * 100f;
-            float remainingPixels = totalPixels - paintedPixels;
-            
-            if (remainingPixels <= totalPixels * 0.001f)
+            float percentage = (float)_paintedPixels / _totalPixels * 100f;
+            if (percentage > _percentageTreshold)
             {
-                bool hasUnpaintedPixels = false;
-                for (int i = 0; i < pixelColors.Length; i++)
-                {
-                    if (pixelColors[i].a < alphaThreshold)
-                    {
-                        hasUnpaintedPixels = true;
-                        break;
-                    }
-                }
-                
-                if (!hasUnpaintedPixels)
-                    return 100f;
+                percentage = 100;
             }
-            
             return percentage;
         }
 
         public bool IsFullyPainted()
         {
-            for (int i = 0; i < pixelColors.Length; i++)
+            for (int i = 0; i < _pixelColors.Length; i++)
             {
-                if (pixelColors[i].a < alphaThreshold)
+                if (_pixelColors[i].a < _alphaThreshold)
                     return false;
             }
             return true;
@@ -116,9 +107,9 @@ namespace PlatformRunner
 
         public void ResetPaintedArea()
         {
-            paintedPixels = 0;
-            System.Array.Clear(pixelPaintedState, 0, pixelPaintedState.Length);
-            System.Array.Clear(pixelColors, 0, pixelColors.Length);
+            _paintedPixels = 0;
+            System.Array.Clear(_pixelPaintedState, 0, _pixelPaintedState.Length);
+            System.Array.Clear(_pixelColors, 0, _pixelColors.Length);
         }
     }
 }

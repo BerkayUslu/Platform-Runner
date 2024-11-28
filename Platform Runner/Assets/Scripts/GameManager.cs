@@ -21,6 +21,7 @@ namespace PlatformRunner.Core
         [SerializeField] private EnemyUnitsManager _enemyUnits;
         [Header("State Settings")]
         [SerializeField] private Transform _paintingPosition;
+        [SerializeField] private float _celebrationTime;
 
 
         private void Awake()
@@ -41,6 +42,11 @@ namespace PlatformRunner.Core
             StartCoroutine(StartGameWithDelay(0.1f));
         }
 
+        private void Update()
+        {
+            _stateMachine.UpdateState();
+        }
+
         private IEnumerator StartGameWithDelay(float time)
         {
             yield return new WaitForSeconds(time);
@@ -52,7 +58,8 @@ namespace PlatformRunner.Core
             _stateMachine.AddState(new MenuState(_uiManager));
             _stateMachine.AddState(new RunningState(_uiManager, _enemyUnits, _player.GetComponent<IMovementController>()));
             _stateMachine.AddState(new RaceEndState(_player.GetComponent<ITweenMovement>(), _paintingPosition));
-            _stateMachine.AddState(new PaintingState(_uiManager, _cameraManager));
+            _stateMachine.AddState(new PaintingState(_uiManager, _cameraManager, PaintingManager.Instance));
+            _stateMachine.AddState(new CelebrateState(_player, _celebrationTime));
         }
 
         public void ChangeState<T>() where T : IGameState

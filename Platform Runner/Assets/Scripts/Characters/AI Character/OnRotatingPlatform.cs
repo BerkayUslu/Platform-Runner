@@ -1,43 +1,70 @@
 using System.Collections;
-using System.Collections.Generic;
-using PlatformRunner;
 using UnityEngine;
 
-public class OnRotatingPlatform : MonoBehaviour
-
+namespace PlatformRunner
 {
-    private Transform _transform;
-    private WaitForSeconds _waitForSeconds;
-    private Coroutine _setParentNull;
-
-    private void Start()
+    public class OnRotatingPlatform : MonoBehaviour
     {
-        _transform = transform;
-        _waitForSeconds = new WaitForSeconds(0.1f);
-    }
+        [SerializeField] private float _rayLength = 1f;
+        [SerializeField] private int _checkInterval = 5;
 
-    private void OnTriggerEnter(Collider collision)
-    {
-        if (collision.gameObject.CompareTag(Tags.RotatingPlatform))
+        private Transform _transform;
+        private WaitForSeconds _parentNullDelay;
+        private Coroutine _setParentNull;
+        private int _frameCounter;
+        private RaycastHit _hit;
+
+        private void Start()
         {
-            if (_setParentNull != null)
-                StopCoroutine(_setParentNull);
-            _transform.parent = collision.transform;
+            _transform = transform;
+            _parentNullDelay = new WaitForSeconds(0.1f);
+            _frameCounter = 0;
         }
 
-    }
-
-    private void OnTriggerExit(Collider collision)
-    {
-        if (collision.gameObject.CompareTag(Tags.RotatingPlatform))
+        private void FixedUpdate()
         {
-            _setParentNull = StartCoroutine("SetTransformNull");
-        }
-    }
+            _frameCounter++;
 
-    private IEnumerator SetTransformNull()
-    {
-        yield return _waitForSeconds;
-        _transform.parent = null;
+            if (_frameCounter >= _checkInterval)
+            {
+                _frameCounter = 0;
+                CheckGround();
+            }
+        }
+
+        private void CheckGround()
+        {
+            if (Physics.Raycast(_transform.position, Vector3.down, out _hit, _rayLength))
+            {
+                if (_hit.collider.CompareTag(Tags.RotatingPlatform))
+                {
+                    if (_setParentNull != null)
+                    {
+                        StopCoroutine(_setParentNull);
+                    }
+                    _transform.parent = _hit.transform;
+                }
+                else if (_transform.parent != null)
+                {
+                    _setParentNull = StartCoroutine(SetTransformNull());
+                }
+            }
+            else if (_transform.parent != null)
+            {
+                _setParentNull = StartCoroutine(SetTransformNull());
+            }
+        }
+
+        private IEnumerator SetTransformNull()
+        {
+            yield return _parentNullDelay;
+            _transform.parent = null;
+        }
+
+        private void OnDrawGizmosSelected()
+        {
+            Gizmos.color = Color.yellow;
+            Gizmos.DrawRay(transform.position, Vector3.down * _rayLength);
+        }
     }
 }

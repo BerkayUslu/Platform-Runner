@@ -51,7 +51,6 @@ namespace PlatformRunner
                 float force = _forceModifier * _angularSpeed * Time.deltaTime;
                 var normal = collisionInfo.GetContact(0).normal;
                 Vector3 direction = Vector3.Cross(normal, Vector3.forward).normalized;
-                Debug.DrawRay(collisionInfo.transform.position, direction, Color.blue);
                 collisionInfo.rigidbody.AddForce(direction * force, ForceMode.VelocityChange);
                 collisionInfo.rigidbody.velocity = direction * _velocityModifier;
             }

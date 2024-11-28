@@ -14,6 +14,8 @@ namespace PlatformRunner.Player
         private readonly int Idle = Animator.StringToHash("Idle");
         private readonly int Running = Animator.StringToHash("Running");
         private readonly int FlyingBackDeath = Animator.StringToHash("FlyingBackDeath");
+        private readonly int Dance = Animator.StringToHash("Dance");
+        private readonly int TurnBack = Animator.StringToHash("TurnBack");
 
         private void Start()
         {
@@ -36,6 +38,23 @@ namespace PlatformRunner.Player
                 default:
                     throw new ArgumentOutOfRangeException(nameof(state), state, $"No implementation of {state} is found");
             }
+        }
+
+        public void PlayCelebrationAnimation()
+        {
+            PlayTurnBackAnimation();
+            Invoke("PlayDanceAnimation", 1.5f);
+        }
+        private void PlayTurnBackAnimation()
+        {
+            _animator.applyRootMotion = true;
+            ChangeAnimationState(TurnBack);
+        }
+
+        private void PlayDanceAnimation()
+        {
+            _animator.applyRootMotion = false;
+            ChangeAnimationState(Dance);
         }
 
         private void ChangeAnimationState(int stateHash)

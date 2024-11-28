@@ -14,7 +14,7 @@ namespace PlatformRunner
         private readonly int Idle = Animator.StringToHash("Idle");
         private readonly int Running = Animator.StringToHash("Running");
         private readonly int FlyingBackDeath = Animator.StringToHash("FlyingBackDeath");
-        private readonly int EnemyDance = Animator.StringToHash("EnemyDance");
+        private readonly int EnemyDance = Animator.StringToHash("Dance");
 
 
         private void Start()

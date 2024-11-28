@@ -1,46 +1,55 @@
 using UnityEngine;
 using System.Linq;
 using TMPro;
+using Unity.VisualScripting;
 
 namespace PlatformRunner
 {
-    public class Pen : MonoBehaviour
+    public class Brush : MonoBehaviour
     {
         [Header("Brush Settings")]
         [SerializeField] private int _basePenSize = 100;
         [SerializeField] private int _maxPenSize = 300;
         [SerializeField] private Color drawColor = Color.black;
 
-        [Header("UI References")]
-        [SerializeField] private TextMeshProUGUI percentageText;
+        [Header("References")]
+        [SerializeField] private PaintingBoard _board;
 
-        private int penSize;
-        private PaintingBoard board;
-        private Color[] colors;
-        private Vector2 lastDrawPosition;
-        private bool wasDrawingLastFrame;
-        private bool isFirstTouch = true;
-        private float updateTimer = 0f;
-        private const float UPDATE_INTERVAL = 0.1f;
+        private int _penSize;
+        private Color[] _colors;
+        private Vector2 _lastDrawPosition;
+        private bool _wasDrawingLastFrame;
+        private bool _isFirstTouch = true;
+        private bool _enabled = false;
 
         private void Start()
         {
-            penSize = _basePenSize;
-            board = GetComponent<PaintingBoard>();
+            _penSize = _basePenSize;
+            PaintingManager.Instance.OnPaintingEnabled += EnablePainting;
             GenerateCircularBrush();
+        }
+
+        private void OnDestroy()
+        {
+            PaintingManager.Instance.OnPaintingEnabled -= EnablePainting;
+        }
+
+        private void EnablePainting()
+        {
+            _enabled = true;
         }
 
         private void GenerateCircularBrush()
         {
-            colors = new Color[penSize * penSize];
-            float radius = penSize * 0.5f;
+            _colors = new Color[_penSize * _penSize];
+            float radius = _penSize * 0.5f;
             Vector2 center = new Vector2(radius, radius);
 
-            for (int x = 0; x < penSize; x++)
+            for (int x = 0; x < _penSize; x++)
             {
-                for (int y = 0; y < penSize; y++)
+                for (int y = 0; y < _penSize; y++)
                 {
-                    int index = y * penSize + x;
+                    int index = y * _penSize + x;
                     Vector2 pos = new Vector2(x, y);
                     float distance = Vector2.Distance(pos, center);
 
@@ -52,11 +61,11 @@ namespace PlatformRunner
                             alpha = 1f - (distance - (radius - 1));
                         }
 
-                        colors[index] = new Color(drawColor.r, drawColor.g, drawColor.b, drawColor.a * alpha);
+                        _colors[index] = new Color(drawColor.r, drawColor.g, drawColor.b, drawColor.a * alpha);
                     }
                     else
                     {
-                        colors[index] = new Color(0, 0, 0, 0);
+                        _colors[index] = new Color(0, 0, 0, 0);
                     }
                 }
             }
@@ -64,14 +73,10 @@ namespace PlatformRunner
 
         private void Update()
         {
-            HandleTouchInput();
+            if (!_enabled)
+                return;
 
-            updateTimer += Time.deltaTime;
-            if (updateTimer >= UPDATE_INTERVAL)
-            {
-                UpdatePercentageDisplay();
-                updateTimer = 0f;
-            }
+            HandleTouchInput();
         }
 
         private void HandleTouchInput()
@@ -85,12 +90,12 @@ namespace PlatformRunner
                     touch.phase == TouchPhase.Stationary)
                 {
                     Vector2 texturePos;
-                    if (board.ScreenToTexturePoint(touch.position, out texturePos))
+                    if (_board.ScreenToTexturePoint(touch.position, out texturePos))
                     {
                         if (touch.phase == TouchPhase.Began)
                         {
-                            wasDrawingLastFrame = false;
-                            isFirstTouch = true;
+                            _wasDrawingLastFrame = false;
+                            _isFirstTouch = true;
                         }
 
                         DrawAtPosition(texturePos);
@@ -98,52 +103,52 @@ namespace PlatformRunner
                 }
                 else if (touch.phase == TouchPhase.Ended || touch.phase == TouchPhase.Canceled)
                 {
-                    wasDrawingLastFrame = false;
-                    isFirstTouch = true;
+                    _wasDrawingLastFrame = false;
+                    _isFirstTouch = true;
                 }
             }
             else
             {
-                wasDrawingLastFrame = false;
-                isFirstTouch = true;
+                _wasDrawingLastFrame = false;
+                _isFirstTouch = true;
             }
         }
 
         private void DrawAtPosition(Vector2 texturePos)
         {
-            int originalX = (int)(texturePos.x * board.textureSize.x - (penSize / 2));
-            int originalY = (int)(texturePos.y * board.textureSize.y - (penSize / 2));
+            int originalX = (int)(texturePos.x * _board.TextureSize.x - (_penSize / 2));
+            int originalY = (int)(texturePos.y * _board.TextureSize.y - (_penSize / 2));
 
             DrawWithBoundaryCheck(originalX, originalY);
 
-            if (wasDrawingLastFrame && !isFirstTouch)
+            if (_wasDrawingLastFrame && !_isFirstTouch)
             {
                 Vector2 currentPos = new Vector2(originalX, originalY);
-                Vector2 delta = currentPos - lastDrawPosition;
+                Vector2 delta = currentPos - _lastDrawPosition;
                 float distance = delta.magnitude;
-                int steps = Mathf.Max(1, Mathf.CeilToInt(distance / (penSize * 0.25f)));
+                int steps = Mathf.Max(1, Mathf.CeilToInt(distance / (_penSize * 0.25f)));
 
                 for (int i = 1; i < steps; i++)
                 {
                     float t = i / (float)steps;
-                    int lerpX = (int)Mathf.Lerp(lastDrawPosition.x, originalX, t);
-                    int lerpY = (int)Mathf.Lerp(lastDrawPosition.y, originalY, t);
+                    int lerpX = (int)Mathf.Lerp(_lastDrawPosition.x, originalX, t);
+                    int lerpY = (int)Mathf.Lerp(_lastDrawPosition.y, originalY, t);
                     DrawWithBoundaryCheck(lerpX, lerpY);
                 }
             }
 
-            board.texture.Apply();
-            lastDrawPosition = new Vector2(originalX, originalY);
-            wasDrawingLastFrame = true;
-            isFirstTouch = false;
+            _board.Texture.Apply();
+            _lastDrawPosition = new Vector2(originalX, originalY);
+            _wasDrawingLastFrame = true;
+            _isFirstTouch = false;
         }
 
         private void DrawWithBoundaryCheck(int x, int y)
         {
             int drawX = x;
             int drawY = y;
-            int drawWidth = penSize;
-            int drawHeight = penSize;
+            int drawWidth = _penSize;
+            int drawHeight = _penSize;
             int sourceX = 0;
             int sourceY = 0;
 
@@ -160,13 +165,13 @@ namespace PlatformRunner
                 drawY = 0;
             }
 
-            if (drawX + drawWidth > board.textureSize.x)
+            if (drawX + drawWidth > _board.TextureSize.x)
             {
-                drawWidth = (int)board.textureSize.x - drawX;
+                drawWidth = (int)_board.TextureSize.x - drawX;
             }
-            if (drawY + drawHeight > board.textureSize.y)
+            if (drawY + drawHeight > _board.TextureSize.y)
             {
-                drawHeight = (int)board.textureSize.y - drawY;
+                drawHeight = (int)_board.TextureSize.y - drawY;
             }
 
             if (drawWidth > 0 && drawHeight > 0)
@@ -177,16 +182,16 @@ namespace PlatformRunner
                 {
                     for (int px = 0; px < drawWidth; px++)
                     {
-                        int sourceIndex = (sourceY + py) * penSize + (sourceX + px);
+                        int sourceIndex = (sourceY + py) * _penSize + (sourceX + px);
                         int targetIndex = py * drawWidth + px;
 
-                        if (sourceIndex < colors.Length && targetIndex < clippedColors.Length)
+                        if (sourceIndex < _colors.Length && targetIndex < clippedColors.Length)
                         {
-                            Color sourceColor = colors[sourceIndex];
+                            Color sourceColor = _colors[sourceIndex];
 
                             if (sourceColor.a < 1)
                             {
-                                Color existingColor = board.texture.GetPixel(drawX + px, drawY + py);
+                                Color existingColor = _board.Texture.GetPixel(drawX + px, drawY + py);
                                 sourceColor = Color.Lerp(existingColor, sourceColor, sourceColor.a);
                             }
 
@@ -195,17 +200,8 @@ namespace PlatformRunner
                     }
                 }
 
-                board.texture.SetPixels(drawX, drawY, drawWidth, drawHeight, clippedColors);
-                board.UpdatePaintedArea(drawX, drawY, drawWidth, drawHeight, clippedColors);
-            }
-        }
-
-        private void UpdatePercentageDisplay()
-        {
-            if (percentageText != null)
-            {
-                float percentage = board.GetPaintedPercentage();
-                percentageText.text = $"Painted: {percentage:F1}%";
+                _board.Texture.SetPixels(drawX, drawY, drawWidth, drawHeight, clippedColors);
+                _board.UpdatePaintedArea(drawX, drawY, drawWidth, drawHeight, clippedColors);
             }
         }
 
@@ -225,7 +221,7 @@ namespace PlatformRunner
 
         public void SetPenSize(int newSize)
         {
-            penSize = Mathf.Max(1, newSize);
+            _penSize = Mathf.Max(1, newSize);
             GenerateCircularBrush();
         }
     }

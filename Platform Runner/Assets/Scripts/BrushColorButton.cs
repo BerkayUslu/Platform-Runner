@@ -5,14 +5,14 @@ using UnityEngine.EventSystems;
 
 namespace PlatformRunner
 {
-    public class PenColorButton : MonoBehaviour, IPointerDownHandler
+    public class BrushColorButton : MonoBehaviour, IPointerDownHandler
     {
         [SerializeField] private Color _color;
-        [SerializeField] private Pen _pen;
+        [SerializeField] private Brush _brush;
 
         private void Start()
         {
-            if (_pen == null)
+            if (_brush == null)
             {
                 Debug.LogWarning("Pen reference is not set");
             }
@@ -20,7 +20,7 @@ namespace PlatformRunner
 
         public void OnPointerDown(PointerEventData eventData)
         {
-            _pen.SetPenColor(_color);
+            _brush.SetPenColor(_color);
         }
     }
 }

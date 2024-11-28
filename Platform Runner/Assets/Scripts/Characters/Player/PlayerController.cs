@@ -51,6 +51,11 @@ namespace PlatformRunner.Player
             Died?.Invoke();
         }
 
+        public void PlayCelebrateAnimation()
+        {
+            _playerAnimator.PlayCelebrationAnimation();
+        }
+
         private IEnumerator RespawnAfterDelay()
         {
             yield return new WaitForSeconds(_respawnDelay);
