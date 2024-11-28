@@ -13,9 +13,6 @@ namespace PlatformRunner
         [SerializeField] private GameObject _joystickUI;
         [SerializeField] private GameObject _paintingUI;
 
-        [SerializeField] private PositionText _positionText;
-        [SerializeField] private CoinAmountUI _coinAmountText;
-
         private void Awake()
         {
             if (Instance == null)

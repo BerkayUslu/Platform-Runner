@@ -1,33 +1,20 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace PlatformRunner
 {
-    public class GameManager : MonoBehaviour
+    public class GameManager : Singleton<GameManager>
     {
-        public static GameManager Instance;
-
         private GameState _state;
-        public GameState State { get { return _state; } }
+        public GameState State => _state;
 
         public static event Action<GameState> GameStateChanged;
 
-        private void Awake()
+        protected override void Awake()
         {
-            if (Instance == null)
-                Instance = this;
-            else
-            {
-                Destroy(gameObject);
-                return;
-            }
-        }
-
-        private void Start()
-        {
-            StartCoroutine(InitialStartWithDelay(0.5f));
+            base.Awake();
+            StartCoroutine(InitialStartWithDelay(0.1f));
         }
 
         private IEnumerator InitialStartWithDelay(float delay)
@@ -43,14 +30,19 @@ namespace PlatformRunner
             switch (state)
             {
                 case GameState.StartMenu:
+                    HandleStartMenuState();
                     break;
                 case GameState.RunningGame:
+                    HandleRunningGameState();
                     break;
                 case GameState.WallPainting:
+                    HandleWallPaintingState();
                     break;
                 case GameState.Restart:
+                    HandleRestartState();
                     break;
                 case GameState.RunningGameFinish:
+                    HandleRunningGameFinishState();
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(state), state, $"No implementation of {state} is found");
@@ -59,12 +51,35 @@ namespace PlatformRunner
             GameStateChanged?.Invoke(state);
         }
 
+        private void HandleStartMenuState()
+        {
+            // Initialize start menu state
+        }
+
+        private void HandleRunningGameState()
+        {
+            // Initialize running game state
+        }
+
+        private void HandleWallPaintingState()
+        {
+            // Initialize wall painting state
+        }
+
+        private void HandleRestartState()
+        {
+            // Handle restart logic
+        }
+
+        private void HandleRunningGameFinishState()
+        {
+            // Handle finish state logic
+        }
 
         public void StartGame()
         {
             ChangeGameState(GameState.RunningGame);
         }
-
     }
 
     [Serializable]
