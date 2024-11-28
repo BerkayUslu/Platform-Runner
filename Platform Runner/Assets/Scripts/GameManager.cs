@@ -15,7 +15,7 @@ namespace PlatformRunner.Core
         private GameStateMachine _stateMachine;
 
         [Header("Script References")]
-        [SerializeField] private PlayerStateManager _player;
+        [SerializeField] private PlayerController _player;
         [SerializeField] private UiManager _uiManager;
         [SerializeField] private CameraManager _cameraManager;
         [SerializeField] private EnemyUnitsManager _enemyUnits;
@@ -38,6 +38,12 @@ namespace PlatformRunner.Core
         {
             _stateMachine = new GameStateMachine();
             AddStatesToStateMachine();
+            StartCoroutine(StartGameWithDelay(0.1f));
+        }
+
+        private IEnumerator StartGameWithDelay(float time)
+        {
+            yield return new WaitForSeconds(time);
             ChangeState<MenuState>();
         }
 

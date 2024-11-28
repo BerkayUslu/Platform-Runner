@@ -13,6 +13,7 @@ namespace PlatformRunner.Core.StateMachine
 
         public void Enter()
         {
+            _uiManager.HideAll();
             _uiManager.ShowMenu();
         }
 

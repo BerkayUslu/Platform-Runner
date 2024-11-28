@@ -33,7 +33,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: df4b2f88fca4d4185bb646701749d7f1, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -8.2
+      value: 63.8
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: df4b2f88fca4d4185bb646701749d7f1, type: 3}
       propertyPath: m_LocalRotation.w
@@ -150,6 +150,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _animator: {fileID: 4407894221128764180}
+--- !u!114 &1530239906
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6953557862076189652}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4507419de810f40d9bd6c85c97262444, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &7800632410580246522
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -165,7 +177,7 @@ MonoBehaviour:
   _joystick: {fileID: 0}
   _movementSpeed: 0.125
   _rotationSpeed: 5
---- !u!114 &1530239906
+--- !u!114 &1530239907
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -174,34 +186,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 6953557862076189652}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4507419de810f40d9bd6c85c97262444, type: 3}
+  m_Script: {fileID: 11500000, guid: 9cea0e5f8f4314971972d7b357d2a29e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &7800632410580246527
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6953557862076189652}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2dcd6e4c617964dce97f7606b4cc4d60, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &8257459971727047664
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6953557862076189652}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 915e2d29cb88c4ffeb0f64b257b09b3b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _health: {fileID: 7800632410580246527}
   _movementController: {fileID: 7800632410580246522}
   _playerAnimator: {fileID: 1142975428}
   _respawnDelay: 1.5
