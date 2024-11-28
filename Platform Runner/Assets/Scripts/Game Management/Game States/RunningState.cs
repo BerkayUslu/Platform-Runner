@@ -1,19 +1,20 @@
 using PlatformRunner.Player;
 using PlatformRunner.UI;
+using UnityEngine;
 
 namespace PlatformRunner.Core.StateMachine
 {
     public class RunningState : IGameState
     {
         private readonly UiManager _uiManager;
-        private readonly PlayerController _player;
+        private readonly IMovementController _playerMovement;
         private readonly EnemyUnitsManager _enemyUnits;
 
-        public RunningState(UiManager uiManager, PlayerController player, EnemyUnitsManager enemyUnits)
+        public RunningState(UiManager uiManager, EnemyUnitsManager enemyUnits, IMovementController playerMovement)
         {
             _uiManager = uiManager;
-            _player = player;
             _enemyUnits = enemyUnits;
+            _playerMovement = playerMovement;
         }
 
         public void Enter()
@@ -24,8 +25,8 @@ namespace PlatformRunner.Core.StateMachine
 
         public void Exit()
         {
+            _playerMovement.StopMovement();
             _uiManager.HideAll();
-            _player.StopMovement();
         }
 
         public void Update() { }

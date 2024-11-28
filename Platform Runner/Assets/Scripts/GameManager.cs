@@ -15,7 +15,7 @@ namespace PlatformRunner.Core
         private GameStateMachine _stateMachine;
 
         [Header("Script References")]
-        [SerializeField] private PlayerController _player;
+        [SerializeField] private PlayerStateManager _player;
         [SerializeField] private UiManager _uiManager;
         [SerializeField] private CameraManager _cameraManager;
         [SerializeField] private EnemyUnitsManager _enemyUnits;
@@ -44,8 +44,8 @@ namespace PlatformRunner.Core
         private void AddStatesToStateMachine()
         {
             _stateMachine.AddState(new MenuState(_uiManager));
-            _stateMachine.AddState(new RunningState(_uiManager, _player, _enemyUnits));
-            _stateMachine.AddState(new RaceEndState(_player, _paintingPosition));
+            _stateMachine.AddState(new RunningState(_uiManager, _enemyUnits, _player.GetComponent<IMovementController>()));
+            _stateMachine.AddState(new RaceEndState(_player.GetComponent<ITweenMovement>(), _paintingPosition));
             _stateMachine.AddState(new PaintingState(_uiManager, _cameraManager));
         }
 

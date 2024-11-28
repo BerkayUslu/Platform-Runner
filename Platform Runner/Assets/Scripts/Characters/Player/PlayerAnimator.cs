@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using PlatformRunner.Player;
@@ -8,31 +9,33 @@ namespace PlatformRunner.Player
     public class PlayerAnimator : MonoBehaviour
     {
         [SerializeField] private Animator _animator;
-        [SerializeField] private PlayerMovementController _movementController;
-        [SerializeField] private PlayerHealth _health;
-
         private int _currentState;
+
         private readonly int Idle = Animator.StringToHash("Idle");
         private readonly int Running = Animator.StringToHash("Running");
-        private readonly int FlipBackDeath = Animator.StringToHash("FlipBackDeath");
         private readonly int FlyingBackDeath = Animator.StringToHash("FlyingBackDeath");
-
 
         private void Start()
         {
-            _movementController.Stopped += () => ChangeAnimationState(Idle);
-            _movementController.Moved += () => ChangeAnimationState(Running);
-            _health.Died += () => ChangeAnimationState(FlyingBackDeath);
-
             ChangeAnimationState(Idle);
         }
 
-        private void OnDisable()
+        public void PlayAnimationForPlayerState(PlayerState state)
         {
-
-            _movementController.Stopped -= () => ChangeAnimationState(Idle);
-            _movementController.Moved -= () => ChangeAnimationState(Running);
-            _health.Died -= () => ChangeAnimationState(FlyingBackDeath);
+            switch (state)
+            {
+                case PlayerState.Idle:
+                    ChangeAnimationState(Idle);
+                    break;
+                case PlayerState.Moving:
+                    ChangeAnimationState(Running);
+                    break;
+                case PlayerState.Dead:
+                    ChangeAnimationState(FlyingBackDeath);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(state), state, $"No implementation of {state} is found");
+            }
         }
 
         private void ChangeAnimationState(int stateHash)

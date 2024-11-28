@@ -10,8 +10,6 @@ namespace PlatformRunner.Player
         public event Action Died;
         public bool IsDead { get; private set; }
 
-        [SerializeField] private float _respawnDelay = 1.5f;
-
         private void OnEnable()
         {
             IsDead = false;
@@ -23,14 +21,6 @@ namespace PlatformRunner.Player
 
             IsDead = true;
             Died?.Invoke();
-            PlayerStatsManager.Instance.IncreaseFail();
-            StartCoroutine(nameof(RespawnAfterDelay));
-        }
-
-        private IEnumerator RespawnAfterDelay()
-        {
-            yield return new WaitForSeconds(_respawnDelay);
-            GameManager.Instance.RestartCurrentScene();
         }
     }
 }
