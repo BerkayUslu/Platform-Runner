@@ -224,12 +224,12 @@ namespace PlatformRunner
             }
         }
 
-        public void ChangePenSize(float value)
+        public void ChangeBrushSize(float value)
         {
             value = Mathf.Clamp01(value);
             int addedSize = (int)((_maxPenSize - _basePenSize) * value);
             int size = _basePenSize + addedSize;
-            SetPenSize(size);
+            SetBrushSize(size);
         }
 
         public void SetBrushColor(Color newColor)
@@ -238,7 +238,7 @@ namespace PlatformRunner
             GenerateCircularBrush();
         }
 
-        public void SetPenSize(int newSize)
+        public void SetBrushSize(int newSize)
         {
             _penSize = Mathf.Max(1, newSize);
             GenerateCircularBrush();
