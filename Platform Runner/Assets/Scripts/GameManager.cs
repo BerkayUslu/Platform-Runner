@@ -20,7 +20,8 @@ namespace PlatformRunner.Core
         [SerializeField] private UiManager _uiManager;
         [SerializeField] private CameraManager _cameraManager;
         [SerializeField] private EnemyUnitsManager _enemyUnits;
-        [SerializeField] private StartCountdown _startCountdown;
+        [SerializeField] private StartCountdownAnimation _startCountdown;
+        [SerializeField] private RaceEndPositionAnimation _raceEndPositionAnimation;
         [Header("State Settings")]
         [SerializeField] private Transform _paintingPosition;
         [SerializeField] private float _celebrationTime;
@@ -64,7 +65,7 @@ namespace PlatformRunner.Core
         {
             _stateMachine.AddState(new MenuState(_uiManager));
             _stateMachine.AddState(new RunningState(_uiManager, _enemyUnits, _player.GetComponent<IMovementController>(), _startCountdown));
-            _stateMachine.AddState(new RaceEndState(_player.GetComponent<ITweenMovement>(), _paintingPosition, RunningRaceManager.Instance));
+            _stateMachine.AddState(new RaceEndState(_player.GetComponent<ITweenMovement>(), _paintingPosition, RunningRaceManager.Instance, UiManager.Instance, _raceEndPositionAnimation));
             _stateMachine.AddState(new PaintingState(_uiManager, _cameraManager, PaintingManager.Instance));
             _stateMachine.AddState(new CelebrateState(_player, _celebrationTime));
         }

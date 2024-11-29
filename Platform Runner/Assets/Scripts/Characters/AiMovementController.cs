@@ -13,7 +13,7 @@ namespace PlatformRunner
         public event Action Moved;
         public event Action Stopped;
 
-private bool _canMove = true;
+        private bool _canMove = true;
         private bool _isMoving = false;
 
         private void FixedUpdate()
@@ -39,6 +39,9 @@ private bool _canMove = true;
 
         public void MoveToPosition(Vector3 position)
         {
+            if (!_canMove)
+                return;
+                
             _navMeshAgent.SetDestination(position);
             _isMoving = true;
             Moved?.Invoke();

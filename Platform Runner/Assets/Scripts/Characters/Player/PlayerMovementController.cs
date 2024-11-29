@@ -88,7 +88,7 @@ namespace PlatformRunner.Player
 
         public void EnableMovement()
         {
-            _canMove = false;
+            _canMove = true;
         }
         
         public Tween MoveToPosition(Vector3 position, float time)

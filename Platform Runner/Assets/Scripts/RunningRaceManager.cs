@@ -10,6 +10,7 @@ namespace PlatformRunner
 {
     public class RunningRaceManager : SingletonMonobehaviour<RunningRaceManager>
     {
+        #region Position Tracking
         public event Action<int> PlayerPositionChanged;
         [SerializeField] private RaceParticipant[] _raceParticipants;
         [SerializeField] private int _poisitionCheckFrameInterval = 5;
@@ -86,5 +87,17 @@ namespace PlatformRunner
         {
             _raceParticipants = FindObjectsOfType<RaceParticipant>();
         }
+        #endregion
+
+        #region Optimization
+        [SerializeField] private GameObject _enemies;
+        [SerializeField] private GameObject _obstacles;
+
+        public void DisableObstaclesAndEnemies()
+        {
+            _enemies.SetActive(false);
+            _obstacles.SetActive(false);
+        }
+        #endregion
     }
 }

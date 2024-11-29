@@ -9,15 +9,17 @@ namespace PlatformRunner
         [SerializeField] private int _checkInterval = 5;
 
         private Transform _transform;
-        private WaitForSeconds _parentNullDelay;
-        private Coroutine _setParentNull;
+        private Transform _initialParent;
+        private WaitForSeconds _initialParentDelay;
+        private Coroutine _setParentInitial;
         private int _frameCounter;
         private RaycastHit _hit;
 
         private void Start()
         {
+            _initialParent = transform.parent;
             _transform = transform;
-            _parentNullDelay = new WaitForSeconds(0.1f);
+            _initialParentDelay = new WaitForSeconds(0.1f);
             _frameCounter = 0;
         }
 
@@ -38,27 +40,27 @@ namespace PlatformRunner
             {
                 if (_hit.collider.CompareTag(Tags.RotatingPlatform))
                 {
-                    if (_setParentNull != null)
+                    if (_setParentInitial != null)
                     {
-                        StopCoroutine(_setParentNull);
+                        StopCoroutine(_setParentInitial);
                     }
                     _transform.parent = _hit.transform;
                 }
                 else if (_transform.parent != null)
                 {
-                    _setParentNull = StartCoroutine(SetTransformNull());
+                    _setParentInitial = StartCoroutine(SetParentToInitial());
                 }
             }
             else if (_transform.parent != null)
             {
-                _setParentNull = StartCoroutine(SetTransformNull());
+                _setParentInitial = StartCoroutine(SetParentToInitial());
             }
         }
 
-        private IEnumerator SetTransformNull()
+        private IEnumerator SetParentToInitial()
         {
-            yield return _parentNullDelay;
-            _transform.parent = null;
+            yield return _initialParentDelay;
+            _transform.parent = _initialParent;
         }
 
         private void OnDrawGizmosSelected()

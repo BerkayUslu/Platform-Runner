@@ -6,11 +6,11 @@ using UnityEngine;
 
 namespace PlatformRunner
 {
-    public class StartCountdown : MonoBehaviour
+    public class StartCountdownAnimation : MonoBehaviour
     {
         [SerializeField] private TMP_Text _text;
-        [SerializeField] private string[] _countdownStrings;
 
+        private string[] _countdownStrings = new string[] { "3", "2", "1", "GO" };
         private RectTransform _textTransform;
 
         private void Start()
@@ -44,7 +44,6 @@ namespace PlatformRunner
 
                 countdownSequence.AppendCallback(() =>
                     {
-                        Debug.Log(currentIndex);
                         if (currentIndex + 1 < _countdownStrings.Length)
                             _text.text = _countdownStrings[currentIndex + 1];
                     });

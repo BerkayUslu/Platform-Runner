@@ -73,41 +73,60 @@ namespace PlatformRunner
 
         private void Update()
         {
-            if (!_enabled)
-                return;
+            if (!_enabled) return;
 
-            HandleTouchInput();
+            if (Input.touchCount > 0)
+            {
+                HandleTouchInput();
+            }
+            else
+            {
+                HandleMouseInput();
+            }
+        }
+
+        private void HandleMouseInput()
+        {
+            if (Input.GetMouseButton(0))
+            {
+                Vector2 texturePos;
+                if (_board.ScreenToTexturePoint(Input.mousePosition, out texturePos))
+                {
+                    if (Input.GetMouseButtonDown(0))
+                    {
+                        _wasDrawingLastFrame = false;
+                        _isFirstTouch = true;
+                    }
+
+                    DrawAtPosition(texturePos);
+                }
+            }
+            else if (Input.GetMouseButtonUp(0))
+            {
+                _wasDrawingLastFrame = false;
+                _isFirstTouch = true;
+            }
         }
 
         private void HandleTouchInput()
         {
-            if (Input.touchCount > 0)
+            Touch touch = Input.GetTouch(0);
+
+            if (touch.phase == TouchPhase.Began || touch.phase == TouchPhase.Moved || touch.phase == TouchPhase.Stationary)
             {
-                Touch touch = Input.GetTouch(0);
-
-                if (touch.phase == TouchPhase.Began ||
-                    touch.phase == TouchPhase.Moved ||
-                    touch.phase == TouchPhase.Stationary)
+                Vector2 texturePos;
+                if (_board.ScreenToTexturePoint(touch.position, out texturePos))
                 {
-                    Vector2 texturePos;
-                    if (_board.ScreenToTexturePoint(touch.position, out texturePos))
+                    if (touch.phase == TouchPhase.Began)
                     {
-                        if (touch.phase == TouchPhase.Began)
-                        {
-                            _wasDrawingLastFrame = false;
-                            _isFirstTouch = true;
-                        }
-
-                        DrawAtPosition(texturePos);
+                        _wasDrawingLastFrame = false;
+                        _isFirstTouch = true;
                     }
-                }
-                else if (touch.phase == TouchPhase.Ended || touch.phase == TouchPhase.Canceled)
-                {
-                    _wasDrawingLastFrame = false;
-                    _isFirstTouch = true;
+
+                    DrawAtPosition(texturePos);
                 }
             }
-            else
+            else if (touch.phase == TouchPhase.Ended || touch.phase == TouchPhase.Canceled)
             {
                 _wasDrawingLastFrame = false;
                 _isFirstTouch = true;
@@ -213,7 +232,7 @@ namespace PlatformRunner
             SetPenSize(size);
         }
 
-        public void SetPenColor(Color newColor)
+        public void SetBrushColor(Color newColor)
         {
             drawColor = newColor;
             GenerateCircularBrush();

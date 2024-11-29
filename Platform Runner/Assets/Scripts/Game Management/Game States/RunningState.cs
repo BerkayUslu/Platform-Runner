@@ -10,9 +10,9 @@ namespace PlatformRunner.Core.StateMachine
         private readonly UiManager _uiManager;
         private readonly IMovementController _playerMovement;
         private readonly EnemyUnitsManager _enemyUnits;
-        private readonly StartCountdown _startCountdown;
+        private readonly StartCountdownAnimation _startCountdown;
 
-        public RunningState(UiManager uiManager, EnemyUnitsManager enemyUnits, IMovementController playerMovement, StartCountdown startCountdown)
+        public RunningState(UiManager uiManager, EnemyUnitsManager enemyUnits, IMovementController playerMovement, StartCountdownAnimation startCountdown)
         {
             _uiManager = uiManager;
             _enemyUnits = enemyUnits;
@@ -24,7 +24,8 @@ namespace PlatformRunner.Core.StateMachine
         {
             _playerMovement.DisableMovement();
             _uiManager.ShowInGame();
-            _startCountdown.AnimateCountdown(1f, 0.2f, 0.3f).OnComplete(() =>
+            _uiManager.ShowAnimation();
+            _startCountdown.AnimateCountdown(0.8f, 0.2f, 0.3f).OnComplete(() =>
             {
                 _playerMovement.EnableMovement();
                 _enemyUnits.InitiateTheEnemeyUnits();

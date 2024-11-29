@@ -2,25 +2,34 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 namespace PlatformRunner
 {
     public class BrushColorButton : MonoBehaviour, IPointerDownHandler
     {
         [SerializeField] private Color _color;
-        [SerializeField] private Brush _brush;
+        [SerializeField] private Image _selectedIndicator;
+        private ColorSelectionButtons _manager;
 
-        private void Start()
+        public void Init(ColorSelectionButtons manager)
         {
-            if (_brush == null)
-            {
-                Debug.LogWarning("Pen reference is not set");
-            }
+            _manager = manager;
         }
 
         public void OnPointerDown(PointerEventData eventData)
         {
-            _brush.SetPenColor(_color);
+            _manager.ChangeColor(_color, this);
+        }
+
+        public void DisableIndicator()
+        {
+            _selectedIndicator.enabled = false;
+        }
+
+        public void EnableIndicator()
+        {
+            _selectedIndicator.enabled = true;
         }
     }
 }

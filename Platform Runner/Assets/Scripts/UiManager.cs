@@ -11,6 +11,7 @@ namespace PlatformRunner.UI
         public event Action OnShowInGame;
         public event Action OnShowPainting;
         public event Action OnShowJoystick;
+        public event Action OnShowAnimation;
 
         protected override void Awake()
         {
@@ -36,6 +37,11 @@ namespace PlatformRunner.UI
         public void ShowPainting()
         {
             OnShowPainting?.Invoke();
+        }
+
+        public void ShowAnimation()
+        {
+            OnShowAnimation?.Invoke();
         }
     }
 }
