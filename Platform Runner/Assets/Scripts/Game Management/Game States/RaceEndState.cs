@@ -8,11 +8,13 @@ namespace PlatformRunner.Core.StateMachine
     {
         private readonly Transform _paintingPosition;
         private readonly ITweenMovement _tweenMovement;
+        private readonly RunningRaceManager _runningRaceManager;
 
-        public RaceEndState( ITweenMovement tweenMovement, Transform paintingPosition)
+        public RaceEndState(ITweenMovement tweenMovement, Transform paintingPosition, RunningRaceManager runningRaceManager)
         {
             _paintingPosition = paintingPosition;
             _tweenMovement = tweenMovement;
+            _runningRaceManager = runningRaceManager;
         }
 
         public void Enter()
@@ -26,8 +28,9 @@ namespace PlatformRunner.Core.StateMachine
 
         public void MovePlayerToPaintingPosition(Vector3 position)
         {
+            Debug.Log("Animate UI player position");
             _tweenMovement.MoveToPosition(position, 6)
-                .OnKill(() => GameManager.Instance.ChangeState<PaintingState>())
+                .OnComplete(() => GameManager.Instance.ChangeState<PaintingState>())
                 .SetEase(Ease.Linear);
         }
     }

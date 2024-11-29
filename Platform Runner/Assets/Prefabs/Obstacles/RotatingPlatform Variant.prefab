@@ -25,15 +25,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 506201dd53f064dda9b549e8695da1f1, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -0.37
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 506201dd53f064dda9b549e8695da1f1, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -6.06
+      value: -6.18
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 506201dd53f064dda9b549e8695da1f1, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 16.47
+      value: 38.79
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 506201dd53f064dda9b549e8695da1f1, type: 3}
       propertyPath: m_LocalRotation.w
@@ -70,6 +70,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 506201dd53f064dda9b549e8695da1f1, type: 3}
       propertyPath: m_Name
       value: RotatingPlatform
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 506201dd53f064dda9b549e8695da1f1, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 506201dd53f064dda9b549e8695da1f1, type: 3}
       propertyPath: m_TagString
@@ -112,6 +116,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18e04ef39d4c8423a8fa0f00594b78b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _halfTurnTime: 6
+  _halfTurnTime: 10
   _forceModifier: 1
   _velocityModifier: 1.6

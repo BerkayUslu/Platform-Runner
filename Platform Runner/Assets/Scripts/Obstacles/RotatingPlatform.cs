@@ -13,6 +13,7 @@ namespace PlatformRunner
         [SerializeField] private float _halfTurnTime;
         [SerializeField] private float _forceModifier;
         [SerializeField] private float _velocityModifier;
+        [SerializeField] private bool _turnReverse;
 
 
         private Transform _transform;
@@ -21,6 +22,8 @@ namespace PlatformRunner
 
         private void Awake()
         {
+            if (_turnReverse)
+                _halfTurn = -_halfTurn;
             _transform = transform;
             _angularSpeed = Mathf.Abs(_halfTurn) / _halfTurnTime;
         }
@@ -51,6 +54,8 @@ namespace PlatformRunner
                 float force = _forceModifier * _angularSpeed * Time.deltaTime;
                 var normal = collisionInfo.GetContact(0).normal;
                 Vector3 direction = Vector3.Cross(normal, Vector3.forward).normalized;
+                if (_turnReverse)
+                    direction = -direction;
                 collisionInfo.rigidbody.AddForce(direction * force, ForceMode.VelocityChange);
                 collisionInfo.rigidbody.velocity = direction * _velocityModifier;
             }

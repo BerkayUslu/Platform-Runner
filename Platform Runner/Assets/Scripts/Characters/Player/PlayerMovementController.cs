@@ -81,16 +81,21 @@ namespace PlatformRunner.Player
             _transform.rotation = Quaternion.RotateTowards(_transform.rotation, LookRotation, _rotationSpeed);
         }
 
-        public void StopMovement()
+        public void DisableMovement()
         {
             _canMove = false;
         }
 
+        public void EnableMovement()
+        {
+            _canMove = false;
+        }
+        
         public Tween MoveToPosition(Vector3 position, float time)
         {
-            return _transform.DOMove(new Vector3(position.x, 0, position.z), time).OnComplete(() =>
+            return _transform.DOMove(new Vector3(position.x, 0, position.z), time).OnKill(() =>
             {
-                this.Stopped?.Invoke();
+                Stopped?.Invoke();
             });
         }
     }

@@ -11,9 +11,9 @@ namespace PlatformRunner
         [SerializeField] private Transform _pointOnStick;
         [SerializeField] private UnityEvent<Collider, Transform> _triggered;
 
-        private void OnTriggerEnter(Collider collider)
+        private void OnCollisionEnter(Collision collision)
         {
-            _triggered?.Invoke(collider, _pointOnStick);
+            _triggered?.Invoke(collision.collider, _pointOnStick);
         }
     }
 }

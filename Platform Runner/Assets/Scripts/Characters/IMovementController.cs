@@ -10,6 +10,7 @@ namespace PlatformRunner
         public event Action Moved;
         public event Action Stopped;
 
-        public void StopMovement();
+        public void DisableMovement();
+        public void EnableMovement();
     }
 }

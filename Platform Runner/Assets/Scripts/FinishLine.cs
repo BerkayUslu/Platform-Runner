@@ -8,12 +8,19 @@ namespace PlatformRunner
 {
     public class FinishLine : MonoBehaviour
     {
+        [SerializeField] private ConfettiSticksController _confettiSticksController;
         private void OnTriggerEnter(Collider collider)
         {
             if (collider.CompareTag(Tags.Player))
             {
-                GameManager.Instance.ChangeState<RaceEndState>();
+                OnPlayerFinished();
             }
+        }
+
+        private void OnPlayerFinished()
+        {
+            RunningRaceManager.Instance.PlayerPassedFinishLine();
+            _confettiSticksController.PlayConfettiParticles();
         }
     }
 }

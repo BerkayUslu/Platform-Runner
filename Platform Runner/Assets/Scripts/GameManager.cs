@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using PlatformRunner.Core.StateMachine;
 using PlatformRunner.Player;
 using PlatformRunner.UI;
@@ -19,6 +20,7 @@ namespace PlatformRunner.Core
         [SerializeField] private UiManager _uiManager;
         [SerializeField] private CameraManager _cameraManager;
         [SerializeField] private EnemyUnitsManager _enemyUnits;
+        [SerializeField] private StartCountdown _startCountdown;
         [Header("State Settings")]
         [SerializeField] private Transform _paintingPosition;
         [SerializeField] private float _celebrationTime;
@@ -47,6 +49,11 @@ namespace PlatformRunner.Core
             _stateMachine.UpdateState();
         }
 
+        private void OnDestroy()
+        {
+            DOTween.KillAll();
+        }
+
         private IEnumerator StartGameWithDelay(float time)
         {
             yield return new WaitForSeconds(time);
@@ -56,8 +63,8 @@ namespace PlatformRunner.Core
         private void AddStatesToStateMachine()
         {
             _stateMachine.AddState(new MenuState(_uiManager));
-            _stateMachine.AddState(new RunningState(_uiManager, _enemyUnits, _player.GetComponent<IMovementController>()));
-            _stateMachine.AddState(new RaceEndState(_player.GetComponent<ITweenMovement>(), _paintingPosition));
+            _stateMachine.AddState(new RunningState(_uiManager, _enemyUnits, _player.GetComponent<IMovementController>(), _startCountdown));
+            _stateMachine.AddState(new RaceEndState(_player.GetComponent<ITweenMovement>(), _paintingPosition, RunningRaceManager.Instance));
             _stateMachine.AddState(new PaintingState(_uiManager, _cameraManager, PaintingManager.Instance));
             _stateMachine.AddState(new CelebrateState(_player, _celebrationTime));
         }

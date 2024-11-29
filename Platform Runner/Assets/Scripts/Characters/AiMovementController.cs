@@ -13,6 +13,7 @@ namespace PlatformRunner
         public event Action Moved;
         public event Action Stopped;
 
+private bool _canMove = true;
         private bool _isMoving = false;
 
         private void FixedUpdate()
@@ -24,13 +25,14 @@ namespace PlatformRunner
             {
                 _navMeshAgent.isStopped = true;
                 _navMeshAgent.velocity = Vector3.zero;
-                StopMovement();
+                DisableMovement();
                 return;
             }
         }
 
-        public void StopMovement()
+        public void DisableMovement()
         {
+            _canMove = false;
             _isMoving = false;
             Stopped?.Invoke();
         }
@@ -40,6 +42,11 @@ namespace PlatformRunner
             _navMeshAgent.SetDestination(position);
             _isMoving = true;
             Moved?.Invoke();
+        }
+
+        public void EnableMovement()
+        {
+            _canMove = true;
         }
     }
 }

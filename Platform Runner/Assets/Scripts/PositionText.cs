@@ -16,12 +16,12 @@ namespace PlatformRunner
 
         private void Start()
         {
-            RunningRacePositionTracking.PlayerPositionChanged += SetPositionText;
+            RunningRaceManager.Instance.PlayerPositionChanged += SetPositionText;
         }
 
         private void OnDestroy()
         {
-            RunningRacePositionTracking.PlayerPositionChanged -= SetPositionText;
+            RunningRaceManager.Instance.PlayerPositionChanged -= SetPositionText;
         }
 
         public void SetPositionText(int pos)

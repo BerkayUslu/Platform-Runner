@@ -3,19 +3,23 @@ using System.Collections.Generic;
 using System;
 using Unity.VisualScripting;
 using UnityEngine;
+using PlatformRunner.Core;
+using PlatformRunner.Core.StateMachine;
 
 namespace PlatformRunner
 {
-    public class RunningRacePositionTracking : MonoBehaviour
+    public class RunningRaceManager : SingletonMonobehaviour<RunningRaceManager>
     {
-        public static RunningRacePositionTracking Instance;
-        public static event Action<int> PlayerPositionChanged;
+        public event Action<int> PlayerPositionChanged;
         [SerializeField] private RaceParticipant[] _raceParticipants;
         [SerializeField] private int _poisitionCheckFrameInterval = 5;
 
         private List<ParticipantPositionInfo> _participantPositionInfos;
         private int _frameCounter = 0;
         private int _playerPosition = -1;
+        private int _playerFinalPosition = -1;
+        public int PlayerFinalPosition { get { return _playerFinalPosition; } }
+
 
         private class ParticipantPositionInfo
         {
@@ -47,6 +51,12 @@ namespace PlatformRunner
                 CheckPlayerPositioning();
             }
 
+        }
+
+        public void PlayerPassedFinishLine()
+        {
+            _playerFinalPosition = _playerPosition;
+            GameManager.Instance.ChangeState<RaceEndState>();
         }
 
         private void CheckPlayerPositioning()

@@ -5,23 +5,9 @@ using UnityEngine;
 namespace PlatformRunner
 {
     [RequireComponent(typeof(CoinAnimationPool))]
-    public class CoinAnimationsManager : MonoBehaviour
+    public class CoinAnimationsManager : SingletonMonobehaviour<CoinAnimationsManager>
     {
-        public static CoinAnimationsManager Instance;
         private CoinAnimationPool _coinAnimationPool;
-
-        private void Awake()
-        {
-            if (Instance == null)
-            {
-                Instance = this;
-            }
-            else
-            {
-                Destroy(gameObject);
-                return;
-            }
-        }
 
         private void Start()
         {

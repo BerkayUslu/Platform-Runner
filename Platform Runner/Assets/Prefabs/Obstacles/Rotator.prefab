@@ -10,9 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 3169102211250549764}
   - component: {fileID: 3169102211250549767}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Rotator
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -51,6 +51,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _bounceForce: 1000
   _halfTurnTime: 2
+  _spinReverse: 0
 --- !u!1 &3169102211493187993
 GameObject:
   m_ObjectHideFlags: 0
@@ -60,7 +61,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3169102211493187998}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Point
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -91,7 +92,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3169102211765018076}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Point
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -122,7 +123,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3169102212136838475}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Point
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -153,7 +154,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3169102212701519724}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Point
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -242,6 +243,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: RotatingStick (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 2286435727408266265, guid: d63619a27ebff44e2ad09b2973c5269c, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 2286435727408266265, guid: d63619a27ebff44e2ad09b2973c5269c, type: 3}
+      propertyPath: m_TagString
+      value: Obstacle
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d63619a27ebff44e2ad09b2973c5269c, type: 3}
 --- !u!1 &3765542025880113082 stripped
@@ -257,11 +266,27 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3765542025880113082}
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 0.010651311, y: 0.07, z: 0.10582492}
   m_Center: {x: 2.3283064e-10, y: 0.0000000016298145, z: 0.07526629}
+--- !u!208 &1093235813
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3765542025880113082}
+  m_Enabled: 0
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.0050000004, y: 0.0050000004, z: 0.053000003}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 0
+  m_Center: {x: 0, y: 0, z: 0.075}
+  m_TimeToStationary: 0.5
 --- !u!114 &3169102210647585702
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -362,6 +387,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: RotatingStick (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 2286435727408266265, guid: d63619a27ebff44e2ad09b2973c5269c, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 2286435727408266265, guid: d63619a27ebff44e2ad09b2973c5269c, type: 3}
+      propertyPath: m_TagString
+      value: Obstacle
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d63619a27ebff44e2ad09b2973c5269c, type: 3}
 --- !u!1 &3765542026542767382 stripped
@@ -377,11 +410,27 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3765542026542767382}
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 0.010651311, y: 0.07, z: 0.10582492}
   m_Center: {x: 2.3283064e-10, y: 0.0000000016298145, z: 0.07526629}
+--- !u!208 &2016995931
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3765542026542767382}
+  m_Enabled: 0
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.0050000004, y: 0.0050000004, z: 0.053000003}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 0
+  m_Center: {x: 0, y: 0, z: 0.075}
+  m_TimeToStationary: 0.5
 --- !u!114 &3169102211326976258
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -482,6 +531,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: RotatingStick (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 2286435727408266265, guid: d63619a27ebff44e2ad09b2973c5269c, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 2286435727408266265, guid: d63619a27ebff44e2ad09b2973c5269c, type: 3}
+      propertyPath: m_TagString
+      value: Obstacle
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d63619a27ebff44e2ad09b2973c5269c, type: 3}
 --- !u!1 &3765542026529797997 stripped
@@ -497,11 +554,27 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3765542026529797997}
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 0.010651311, y: 0.07, z: 0.10582492}
   m_Center: {x: 2.3283064e-10, y: 0.0000000016298145, z: 0.07526629}
+--- !u!208 &1419024779
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3765542026529797997}
+  m_Enabled: 0
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.0050000004, y: 0.0050000004, z: 0.053000003}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 0
+  m_Center: {x: 0, y: 0, z: 0.075}
+  m_TimeToStationary: 0.5
 --- !u!114 &3169102211342043979
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -602,6 +675,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: Rotator
       objectReference: {fileID: 0}
+    - target: {fileID: 2261568426718893248, guid: 57c896c7a387f47f68894fec5f1aaa6b, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 2261568426718893248, guid: 57c896c7a387f47f68894fec5f1aaa6b, type: 3}
+      propertyPath: m_TagString
+      value: Obstacle
+      objectReference: {fileID: 0}
+    - target: {fileID: 2261568426718893248, guid: 57c896c7a387f47f68894fec5f1aaa6b, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2261568426718893248, guid: 57c896c7a387f47f68894fec5f1aaa6b, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 8
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 57c896c7a387f47f68894fec5f1aaa6b, type: 3}
 --- !u!1 &2322634070126653560 stripped
@@ -622,6 +711,22 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.03
   m_Center: {x: 0, y: -0.015811102, z: -0.000000008381903}
+--- !u!208 &2065004296
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2322634070126653560}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.02, y: 0.015, z: 0.02}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: -0.016, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!114 &710597619
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -736,6 +841,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: RotatingStick
       objectReference: {fileID: 0}
+    - target: {fileID: 2286435727408266265, guid: d63619a27ebff44e2ad09b2973c5269c, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 2286435727408266265, guid: d63619a27ebff44e2ad09b2973c5269c, type: 3}
+      propertyPath: m_TagString
+      value: Obstacle
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d63619a27ebff44e2ad09b2973c5269c, type: 3}
 --- !u!4 &4800500857300115475 stripped
@@ -756,11 +869,27 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5320192297242245801}
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 0.010651311, y: 0.07, z: 0.10582492}
   m_Center: {x: 2.3283064e-10, y: 0.0000000016298145, z: 0.07526629}
+--- !u!208 &821127104
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5320192297242245801}
+  m_Enabled: 0
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.0050000004, y: 0.0050000004, z: 0.053000003}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 0
+  m_Center: {x: 0, y: 0, z: 0.075}
+  m_TimeToStationary: 0.5
 --- !u!114 &3169102212400861804
 MonoBehaviour:
   m_ObjectHideFlags: 0
