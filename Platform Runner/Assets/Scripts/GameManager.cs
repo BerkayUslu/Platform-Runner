@@ -65,7 +65,7 @@ namespace PlatformRunner.Core
         {
             _stateMachine.AddState(new MenuState(_uiManager));
             _stateMachine.AddState(new RunningState(_uiManager, _enemyUnits, _player.GetComponent<IMovementController>(), _startCountdown));
-            _stateMachine.AddState(new RaceEndState(_player.GetComponent<ITweenMovement>(), _paintingPosition, RunningRaceManager.Instance, UiManager.Instance, _raceEndPositionAnimation));
+            _stateMachine.AddState(new RaceEndState(_player.GetComponent<IMovementController>(), _paintingPosition, RunningRaceManager.Instance, UiManager.Instance, _raceEndPositionAnimation));
             _stateMachine.AddState(new PaintingState(_uiManager, _cameraManager, PaintingManager.Instance));
             _stateMachine.AddState(new CelebrateState(_player, _celebrationTime));
         }

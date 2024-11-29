@@ -4,8 +4,8 @@ using UnityEngine;
 
 namespace PlatformRunner
 {
-    public interface IMovementAI
+    public interface IPlayerAnimate
     {
-        public void MoveToPosition(Vector3 position);
+        public void PlayCelebrateAnimation();
     }
 }

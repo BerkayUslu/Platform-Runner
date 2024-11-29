@@ -4,7 +4,7 @@ using System;
 
 namespace PlatformRunner
 {
-    public class EnemyMovementController : MonoBehaviour, IMovementController, IMovementAI
+    public class EnemyMovementController : MonoBehaviour
     {
         [SerializeField] private NavMeshAgent _navMeshAgent;
 
@@ -12,7 +12,9 @@ namespace PlatformRunner
         private bool _isMoving = false;
 
         public event Action Moved;
-        public event Action Stopped;
+        public event Action ArrivedTarget;
+
+        private Vector3 _targetPosition;
 
         private void FixedUpdate()
         {
@@ -23,6 +25,7 @@ namespace PlatformRunner
             {
                 _navMeshAgent.isStopped = true;
                 _navMeshAgent.velocity = Vector3.zero;
+                ArrivedTarget?.Invoke();
                 DisableMovement();
             }
         }
@@ -31,7 +34,6 @@ namespace PlatformRunner
         {
             _canMove = false;
             _isMoving = false;
-            Stopped?.Invoke();
         }
 
         public void EnableMovement()
@@ -42,7 +44,10 @@ namespace PlatformRunner
         public void MoveToPosition(Vector3 position)
         {
             if (!_canMove) return;
-                
+
+            _targetPosition = position;
+            _navMeshAgent.isStopped = false;
+            _navMeshAgent.ResetPath();
             _navMeshAgent.SetDestination(position);
             _isMoving = true;
             Moved?.Invoke();

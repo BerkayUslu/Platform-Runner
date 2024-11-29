@@ -7,7 +7,7 @@ using UnityEngine.AI;
 
 namespace PlatformRunner.Player
 {
-    public class PlayerMovementController : MonoBehaviour, IMovementController, ITweenMovement
+    public class PlayerMovementController : MonoBehaviour, IMovementController
     {
         [Header("References")]
         [SerializeField] private Joystick _joystick;

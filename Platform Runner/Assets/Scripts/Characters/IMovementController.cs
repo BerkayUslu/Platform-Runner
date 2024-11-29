@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 
 namespace PlatformRunner
@@ -12,5 +13,7 @@ namespace PlatformRunner
 
         public void DisableMovement();
         public void EnableMovement();
+        public Tween MoveToPosition(Vector3 position, float time);
+
     }
 }

@@ -17,7 +17,6 @@ namespace PlatformRunner
             ChangeAnimationState(Idle);
         }
 
-        public void PlayIdleAnimation() => ChangeAnimationState(Idle);
         public void PlayRunAnimation() => ChangeAnimationState(Running);
         public void PlayDeathAnimation() => ChangeAnimationState(FlyingBackDeath);
         public void PlayDanceAnimation() => ChangeAnimationState(Dance);

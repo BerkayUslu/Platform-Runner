@@ -26,13 +26,13 @@ namespace PlatformRunner
             _initialPosition = _transform.position;
 
             _movementController.Moved += () => _enemyAnimator.PlayRunAnimation();
-            _movementController.Stopped += () => _enemyAnimator.PlayDanceAnimation();
+            _movementController.ArrivedTarget += () => _enemyAnimator.PlayDanceAnimation();
         }
 
         private void OnDestroy()
         {
             _movementController.Moved -= () => _enemyAnimator.PlayRunAnimation();
-            _movementController.Stopped -= () => _enemyAnimator.PlayDanceAnimation();
+            _movementController.ArrivedTarget -= () => _enemyAnimator.PlayDanceAnimation();
         }
 
         public void InitializeRunningTowardsTarget(Vector3 targetPosition)
@@ -50,7 +50,6 @@ namespace PlatformRunner
             _movementController.DisableMovement();
             _enemyAnimator.PlayDeathAnimation();
             Died?.Invoke();
-
             StartCoroutine(RestartEnemyAfterDeath(1));
         }
 
@@ -65,7 +64,6 @@ namespace PlatformRunner
             _isDead = false;
             _transform.position = _initialPosition;
             _navMeshAgent.enabled = true;
-            //_enemyAnimator.PlayIdleAnimation();
             _movementController.EnableMovement();
             _movementController.MoveToPosition(_targetPosition);
         }

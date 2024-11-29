@@ -7,7 +7,7 @@ using UnityEngine.Apple;
 
 namespace PlatformRunner.Player
 {
-    public class PlayerController : MonoBehaviour, IHealth
+    public class PlayerController : MonoBehaviour, IHealth, IPlayerAnimate
     {
         public static PlayerController Instance;
         public event Action Died;

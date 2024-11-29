@@ -8,15 +8,15 @@ namespace PlatformRunner.Core.StateMachine
     public class RaceEndState : IGameState
     {
         private readonly Transform _paintingPosition;
-        private readonly ITweenMovement _tweenMovement;
+        private readonly IMovementController _playerMovement;
         private readonly RunningRaceManager _runningRaceManager;
         private readonly UiManager _uiManager;
         private readonly RaceEndPositionAnimation _raceEndPositionAnimation;
 
-        public RaceEndState(ITweenMovement tweenMovement, Transform paintingPosition, RunningRaceManager runningRaceManager, UiManager uiManager, RaceEndPositionAnimation raceEndPositionAnimation)
+        public RaceEndState(IMovementController playerMovement, Transform paintingPosition, RunningRaceManager runningRaceManager, UiManager uiManager, RaceEndPositionAnimation raceEndPositionAnimation)
         {
             _paintingPosition = paintingPosition;
-            _tweenMovement = tweenMovement;
+            _playerMovement = playerMovement;
             _runningRaceManager = runningRaceManager;
             _uiManager = uiManager;
             _raceEndPositionAnimation = raceEndPositionAnimation;
@@ -38,7 +38,7 @@ namespace PlatformRunner.Core.StateMachine
 
         public void MovePlayerToPaintingPosition(Vector3 position)
         {
-            _tweenMovement.MoveToPosition(position, 6)
+            _playerMovement.MoveToPosition(position, 6)
                 .OnComplete(() =>
                 {
                     _runningRaceManager.DisableObstaclesAndEnemies();

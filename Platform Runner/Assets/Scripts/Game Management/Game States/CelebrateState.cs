@@ -8,19 +8,19 @@ namespace PlatformRunner.Core.StateMachine
 {
     public class CelebrateState : IGameState
     {
-        private PlayerController _playerController;
+        private IPlayerAnimate _playerAnimate;
         private float _celebrateTime;
         private float _elapsedTime = 0;
 
-        public CelebrateState(PlayerController playerController, float celebrateTime)
+        public CelebrateState(IPlayerAnimate playerAnimate, float celebrateTime)
         {
-            _playerController = playerController;
+            _playerAnimate = playerAnimate;
             _celebrateTime = celebrateTime;
         }
 
         public void Enter()
         {
-            _playerController.PlayCelebrateAnimation();
+            _playerAnimate.PlayCelebrateAnimation();
         }
 
         public void Exit()
