@@ -6,9 +6,8 @@ using UnityEngine.TextCore;
 
 namespace PlatformRunner
 {
-    public class PlayerStatsManager : MonoBehaviour
+    public class PlayerStatsManager : SingletonMonobehaviour<PlayerStatsManager>
     {
-        public static PlayerStatsManager Instance;
         public static event Action<int> CoinAmountChanged;
         public static event Action<int> FailAmountChanged;
 
@@ -21,17 +20,8 @@ namespace PlatformRunner
         public int FailAmount { get => _failAmount; }
         public int CoinAmount { get => _coinAmount; }
 
-        private void Awake()
+        private void Start()
         {
-            if (Instance == null)
-            {
-                Instance = this;
-            }
-            else
-            {
-                Destroy(gameObject);
-                return;
-            }
             LoadAmounts();
         }
 
@@ -51,10 +41,20 @@ namespace PlatformRunner
             Invoke("AddCoin", time);
         }
 
-
         public void IncreaseFail()
         {
             _failAmount++;
+            FailAmountChanged?.Invoke(_failAmount);
+        }
+
+        public void ResetStats()
+        {
+            _coinAmount = 0;
+            _failAmount = 0;
+            
+            SaveAmounts();
+            
+            CoinAmountChanged?.Invoke(_coinAmount);
             FailAmountChanged?.Invoke(_failAmount);
         }
 
