@@ -20,7 +20,7 @@ namespace PlatformRunner
         private void OnPlayerFinished()
         {
             RunningRaceManager.Instance.PlayerPassedFinishLine();
-            _confettiSticksController.PlayConfettiParticles();
+            _confettiSticksController.PlayConfettiParticles(7);
         }
     }
 }

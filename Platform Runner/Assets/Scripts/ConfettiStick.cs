@@ -18,5 +18,10 @@ namespace PlatformRunner
         {
             _particleSystem.Play();
         }
+        
+        public void StopParticleEffect()
+        {
+            _particleSystem.Stop();
+        }
     }
 }

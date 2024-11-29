@@ -13,7 +13,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 70a47eada95b1467d9a2b6ef977ea4a5, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -2.35
+      value: -4.75
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 70a47eada95b1467d9a2b6ef977ea4a5, type: 3}
       propertyPath: m_LocalPosition.y
@@ -21,7 +21,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 70a47eada95b1467d9a2b6ef977ea4a5, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 29.41
+      value: -148.71
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 70a47eada95b1467d9a2b6ef977ea4a5, type: 3}
       propertyPath: m_LocalRotation.w
@@ -29,15 +29,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 70a47eada95b1467d9a2b6ef977ea4a5, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 70a47eada95b1467d9a2b6ef977ea4a5, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 70a47eada95b1467d9a2b6ef977ea4a5, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 70a47eada95b1467d9a2b6ef977ea4a5, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -131,7 +131,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.6
-  m_Speed: 5
+  m_Speed: 6
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
@@ -157,6 +157,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _navMeshAgent: {fileID: 954703723}
   _capsuleCollider: {fileID: 954703722}
+  _movementController: {fileID: 954703728}
+  _enemyAnimator: {fileID: 954703729}
 --- !u!114 &954703728
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -183,7 +185,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _animator: {fileID: 954703727}
-  _currentState: 0
 --- !u!114 &954703730
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -8,10 +8,19 @@ namespace PlatformRunner
     {
         [SerializeField] private ConfettiStick[] _confettiSticks;
 
-        public void PlayConfettiParticles()
+        public void PlayConfettiParticles(float stopTime)
         {
             foreach (ConfettiStick confettiStick in _confettiSticks)
                 confettiStick.PlayParticleEffect();
+
+                Invoke("StopConfettiParticles", stopTime);
         }
+
+        public void StopConfettiParticles()
+        {
+            foreach (ConfettiStick confettiStick in _confettiSticks)
+                confettiStick.StopParticleEffect();
+        }
+
     }
 }

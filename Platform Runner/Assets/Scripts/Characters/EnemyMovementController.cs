@@ -1,20 +1,18 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using System;
 
 namespace PlatformRunner
 {
-    public class AiMovementController : MonoBehaviour, IMovementController, IMovementAI
+    public class EnemyMovementController : MonoBehaviour, IMovementController, IMovementAI
     {
         [SerializeField] private NavMeshAgent _navMeshAgent;
 
-        public event Action Moved;
-        public event Action Stopped;
-
         private bool _canMove = true;
         private bool _isMoving = false;
+
+        public event Action Moved;
+        public event Action Stopped;
 
         private void FixedUpdate()
         {
@@ -26,7 +24,6 @@ namespace PlatformRunner
                 _navMeshAgent.isStopped = true;
                 _navMeshAgent.velocity = Vector3.zero;
                 DisableMovement();
-                return;
             }
         }
 
@@ -37,19 +34,18 @@ namespace PlatformRunner
             Stopped?.Invoke();
         }
 
+        public void EnableMovement()
+        {
+            _canMove = true;
+        }
+
         public void MoveToPosition(Vector3 position)
         {
-            if (!_canMove)
-                return;
+            if (!_canMove) return;
                 
             _navMeshAgent.SetDestination(position);
             _isMoving = true;
             Moved?.Invoke();
-        }
-
-        public void EnableMovement()
-        {
-            _canMove = true;
         }
     }
 }
