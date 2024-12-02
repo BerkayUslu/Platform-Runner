@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 5166998170098364641}
   - component: {fileID: 341778490}
   - component: {fileID: 341778488}
+  - component: {fileID: 8805196348107210493}
   m_Layer: 0
   m_Name: Coin
   m_TagString: Untagged
@@ -62,9 +63,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 502eaf993367f45008026ea80e735a10, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _halfTurnTime: 1
-  _spinReverse: 0
   _coinValue: 1
+--- !u!114 &8805196348107210493
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 330238513472245916}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd30300489e6b44729b0109c16132eef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _isRotatingAroundY: 1
+  _reverseRotationY: 0
+  _yAxisRotationAmount: 360
+  _yAxisRotationTime: 2
+  _easeTypeY: 1
 --- !u!1001 &1235865187745058061
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -72,6 +88,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5166998170098364641}
     m_Modifications:
+    - target: {fileID: 2199820278745995743, guid: 5ed2c47215135429faaca0f3fe0f315c, type: 3}
+      propertyPath: m_Size.x
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2199820278745995743, guid: 5ed2c47215135429faaca0f3fe0f315c, type: 3}
+      propertyPath: m_Size.y
+      value: 0.3
+      objectReference: {fileID: 0}
     - target: {fileID: 2199820278745995743, guid: 5ed2c47215135429faaca0f3fe0f315c, type: 3}
       propertyPath: m_IsTrigger
       value: 1

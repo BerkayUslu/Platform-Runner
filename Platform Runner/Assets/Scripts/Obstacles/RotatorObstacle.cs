@@ -9,30 +9,12 @@ namespace PlatformRunner
     {
         [Header("Settings")]
         [SerializeField] private float _bounceForce = 10;
-        [SerializeField] private float _halfTurnTime;
-        [SerializeField] private bool _spinReverse;
 
-        private float _halfTurn = 180;
         private Transform _transform;
-
-        private Vector3 pos1;
-        private Vector3 pos2;
-        private Vector3 pos3;
-
 
         private void Start()
         {
-            if (_spinReverse)
-                _halfTurn = -_halfTurn;
-                
             _transform = transform;
-            RotatePlatform();
-        }
-        private void RotatePlatform()
-        {
-            _transform.DORotate(Vector3.up * _halfTurn, _halfTurnTime)
-            .SetEase(Ease.Linear)
-            .SetLoops(-1, LoopType.Incremental);
         }
 
         public void TriggerOfRotatingStick(Collider collider, Transform pointOnStick) => TriggerOccuredWithRotatingStick(collider, pointOnStick);

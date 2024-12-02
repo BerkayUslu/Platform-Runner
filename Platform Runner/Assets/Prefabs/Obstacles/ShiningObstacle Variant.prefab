@@ -4837,7 +4837,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: fa45da5b3191648448d6d185ec4ca780, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 5.61
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: fa45da5b3191648448d6d185ec4ca780, type: 3}
       propertyPath: m_LocalPosition.y
@@ -4845,7 +4845,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: fa45da5b3191648448d6d185ec4ca780, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 12.81
+      value: -125.05
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: fa45da5b3191648448d6d185ec4ca780, type: 3}
       propertyPath: m_LocalRotation.w
@@ -4853,7 +4853,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: fa45da5b3191648448d6d185ec4ca780, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: fa45da5b3191648448d6d185ec4ca780, type: 3}
       propertyPath: m_LocalRotation.y
@@ -4945,7 +4945,7 @@ NavMeshObstacle:
   m_Extents: {x: 0.047000002, y: 0.128, z: 0.047000002}
   m_MoveThreshold: 0.1
   m_Carve: 0
-  m_CarveOnlyStationary: 1
+  m_CarveOnlyStationary: 0
   m_Center: {x: 0, y: 0, z: 0}
   m_TimeToStationary: 0.5
 --- !u!114 &1853828574
@@ -4984,6 +4984,23 @@ MonoBehaviour:
   - {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   - {r: 1, g: 0, b: 1, a: 1}
   _particleSystem: {fileID: 615373882}
+--- !u!114 &6157876202829229066
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4700856873100316397}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd30300489e6b44729b0109c16132eef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _isRotatingAroundY: 1
+  _reverseRotationY: 0
+  _yAxisRotationAmount: 360
+  _yAxisRotationTime: 2
+  _easeTypeY: 1
 --- !u!4 &5365789125945939031 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: fa45da5b3191648448d6d185ec4ca780, type: 3}

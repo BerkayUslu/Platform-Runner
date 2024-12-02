@@ -11,11 +11,6 @@ namespace PlatformRunner
         [SerializeField] private float _targetXPositionTwo;
         [SerializeField] private float _moveTime;
 
-        [SerializeField] private float _halfTurnTime;
-        [SerializeField] private bool _spinReverse;
-        private float _halfTurn = 180;
-
-
         private Transform _transform;
         private Sequence _leftRightMovementSequence;
         private ParticleColorController _particleColorController;
@@ -31,15 +26,8 @@ namespace PlatformRunner
             }
 
             MoveBetweenTargets();
-            RotateObstacle();
         }
-
-        private void RotateObstacle()
-        {
-            _transform.DOLocalRotate(Vector3.up * _halfTurn, _halfTurnTime)
-            .SetEase(Ease.Linear)
-            .SetLoops(-1, LoopType.Incremental);
-        }
+        
 
         private void MoveBetweenTargets()
         {

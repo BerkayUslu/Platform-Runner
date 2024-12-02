@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3169102211250549764}
   - component: {fileID: 3169102211250549767}
+  - component: {fileID: 8296041924286346031}
   m_Layer: 6
   m_Name: Rotator
   m_TagString: Obstacle
@@ -26,7 +27,7 @@ Transform:
   m_GameObject: {fileID: 3169102211250549766}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 1.07, z: 0}
-  m_LocalScale: {x: 30, y: 30, z: 30}
+  m_LocalScale: {x: 30.000004, y: 30.000004, z: 30.000004}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 3130133463906003650}
@@ -50,8 +51,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _bounceForce: 1000
-  _halfTurnTime: 2
-  _spinReverse: 0
+--- !u!114 &8296041924286346031
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3169102211250549766}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd30300489e6b44729b0109c16132eef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _isRotatingAroundY: 1
+  _reverseRotationY: 1
+  _yAxisRotationAmount: 360
+  _yAxisRotationTime: 3.6
+  _easeTypeY: 1
 --- !u!1 &3169102211493187993
 GameObject:
   m_ObjectHideFlags: 0
@@ -278,7 +294,7 @@ NavMeshObstacle:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3765542025880113082}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 3
   m_Shape: 1
   m_Extents: {x: 0.0050000004, y: 0.0050000004, z: 0.053000003}
@@ -422,7 +438,7 @@ NavMeshObstacle:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3765542026542767382}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 3
   m_Shape: 1
   m_Extents: {x: 0.0050000004, y: 0.0050000004, z: 0.053000003}
@@ -566,7 +582,7 @@ NavMeshObstacle:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3765542026529797997}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 3
   m_Shape: 1
   m_Extents: {x: 0.0050000004, y: 0.0050000004, z: 0.053000003}
@@ -881,7 +897,7 @@ NavMeshObstacle:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5320192297242245801}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 3
   m_Shape: 1
   m_Extents: {x: 0.0050000004, y: 0.0050000004, z: 0.053000003}
