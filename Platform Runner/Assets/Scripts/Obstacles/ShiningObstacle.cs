@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace PlatformRunner
 {
-    public class ShiningObstacle : MonoBehaviour
+    public class ShiningObstacle : ObstacleBase
     {
         [SerializeField] private float _targetXPositionOne;
         [SerializeField] private float _targetXPositionTwo;
@@ -27,12 +27,12 @@ namespace PlatformRunner
 
             MoveBetweenTargets();
         }
-        
+
 
         private void MoveBetweenTargets()
         {
             _leftRightMovementSequence = DOTween.Sequence();
-            _transform.SetX( _targetXPositionTwo);
+            _transform.SetX(_targetXPositionTwo);
 
             _leftRightMovementSequence
                 .Append(_transform.DOMoveX(_targetXPositionOne, _moveTime));
@@ -42,28 +42,10 @@ namespace PlatformRunner
             _leftRightMovementSequence.SetLoops(-1);
         }
 
-        private void OnTriggerEnter(Collider collider)
-        {
-            OnTouch(collider);
-        }
-
         private void OnCollisionEnter(Collision collision)
         {
-            OnTouch(collision.collider);
+            TryKillCollidedObject(collision.collider);
         }
-
-        private void OnTouch(Collider collider)
-        {
-            if (collider.gameObject.CompareTag(Tags.Player) || collider.gameObject.CompareTag(Tags.Enemy))
-            {
-                _particleColorController.ChangeToRandomColor();
-
-                IHealth characterHealth;
-                if (collider.TryGetComponent(out characterHealth))
-                {
-                    characterHealth.KillCharacter();
-                }
-            }
-        }
+        
     }
 }

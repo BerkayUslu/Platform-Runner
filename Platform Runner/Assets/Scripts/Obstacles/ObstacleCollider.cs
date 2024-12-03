@@ -11,9 +11,9 @@ namespace PlatformRunner
         [SerializeField] private UnityEvent<Collision> _collided;
 
 
-        private void OnTriggerEnter(Collider collider)
+        private void OnTriggerEnter(Collider colliderInfo)
         {
-            _trigerred?.Invoke(collider);
+            _trigerred?.Invoke(colliderInfo);
         }
 
         private void OnCollisionEnter(Collision collision)

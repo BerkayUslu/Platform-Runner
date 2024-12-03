@@ -34,7 +34,7 @@ namespace PlatformRunner.Player
 
         private void FixedUpdate()
         {
-            if (!_canMove || _joystick == null)
+            if (!_canMove || !_joystick)
                 return;
 
             _rawInput = _joystick.Direction;

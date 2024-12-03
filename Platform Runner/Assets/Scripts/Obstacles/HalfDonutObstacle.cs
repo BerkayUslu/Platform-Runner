@@ -5,18 +5,16 @@ using UnityEngine;
 
 namespace PlatformRunner
 {
-    public class HalfDonutObstacle : MonoBehaviour
+    public class HalfDonutObstacle : ObstacleBase
     {
-
-        [Header("Settings")]
-        [SerializeField] private float _bounceForce = 10;
+        [Header("Settings")] [SerializeField] private float _bounceForce = 10;
         [SerializeField] private float _thrustLocalPositionX = -0.12f;
         [SerializeField] private float _drawBackLocalPositionX = 0.15f;
         [SerializeField] private float _thrustTime;
         [SerializeField] private float _drawBackTime;
 
-        [Header("References")]
-        [SerializeField] private Transform _movingStick;
+        [Header("References")] [SerializeField]
+        private Transform _movingStick;
 
         private Sequence _stickAnimationSequence;
         private Transform _transform;
@@ -42,47 +40,26 @@ namespace PlatformRunner
             _stickAnimationSequence.Play();
         }
 
-        public void TriggerOfHalfDonutPart(Collider collider) => TriggerOccuredWithHalfDonutPart(collider);
-        public void TriggerOfStickPart(Collider collider) => TouchOccuredWithStickPart(collider);
-        public void CollisionOfStickPart(Collision collision)
+        public void TriggerOfHalfDonutPart(Collider other)
         {
-            var collider = collision.collider;
-            TouchOccuredWithStickPart(collider);
+            TryKillCollidedObject(other);
+
+            if (!IsEnemOrPlayer(other)) return;
+
+            BounceObjectBack(other.GetComponent<Rigidbody>(), other.transform.position - _transform.position,
+                _bounceForce);
         }
 
-        private void TriggerOccuredWithHalfDonutPart(Collider collider)
+        public void TriggerOfStickPart(Collider other)
         {
-            if (collider.gameObject.CompareTag(Tags.Player) || collider.gameObject.CompareTag(Tags.Enemy))
-            {
-                IHealth characterHealth;
-                if (collider.TryGetComponent(out characterHealth))
-                {
-                    characterHealth.KillCharacter();
-                }
-
-                BounceObjectBack(collider.GetComponent<Rigidbody>(), collider.transform.position - _transform.position, _bounceForce);
-            }
+            TryKillCollidedObject(other);
         }
 
-        private void TouchOccuredWithStickPart(Collider collider)
-        {
-            if (collider.gameObject.CompareTag(Tags.Player) || collider.gameObject.CompareTag(Tags.Enemy))
-            {
-                IHealth characterHealth;
-                if (collider.TryGetComponent(out characterHealth))
-                {
-                    characterHealth.KillCharacter();
-                }
-            }
-        }
-
-        private void BounceObjectBack(Rigidbody rigidbody, Vector3 direction, float force)
+        private void BounceObjectBack(Rigidbody rb, Vector3 direction, float force)
         {
             direction -= direction.y * Vector3.up;
             direction = direction.normalized;
-            rigidbody.AddForce(direction * force, ForceMode.Impulse);
+            rb.AddForce(direction * force, ForceMode.Impulse);
         }
-
     }
-
 }

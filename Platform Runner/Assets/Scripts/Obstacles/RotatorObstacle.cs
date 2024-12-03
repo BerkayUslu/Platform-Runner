@@ -5,10 +5,9 @@ using UnityEngine;
 
 namespace PlatformRunner
 {
-    public class RotatorObstacle : MonoBehaviour
+    public class RotatorObstacle : ObstacleBase
     {
-        [Header("Settings")]
-        [SerializeField] private float _bounceForce = 10;
+        [Header("Settings")] [SerializeField] private float _bounceForce = 10;
 
         private Transform _transform;
 
@@ -17,23 +16,12 @@ namespace PlatformRunner
             _transform = transform;
         }
 
-        public void TriggerOfRotatingStick(Collider collider, Transform pointOnStick) => TriggerOccuredWithRotatingStick(collider, pointOnStick);
-        public void TriggerOfRotator(Collider collider) => TouchOccuredWithRotator(collider);
+        public void TriggerOfRotatingStick(Collider collider, Transform pointOnStick) =>
+            TriggerOccuredWithRotatingStick(collider, pointOnStick);
+
         public void CollisionOfRotator(Collision collision)
         {
-            TouchOccuredWithRotator(collision.collider);
-        }
-
-        private void TouchOccuredWithRotator(Collider collider)
-        {
-            if (collider.gameObject.CompareTag(Tags.Player) || collider.gameObject.CompareTag(Tags.Enemy))
-            {
-                IHealth characterHealth;
-                if (collider.TryGetComponent(out characterHealth))
-                {
-                    characterHealth.KillCharacter();
-                }
-            }
+            TryKillCollidedObject(collision.collider);
         }
 
         private void TriggerOccuredWithRotatingStick(Collider collider, Transform pointOnStick)
