@@ -7,10 +7,6 @@ namespace PlatformRunner
 {
     public class ShiningObstacle : ObstacleBase
     {
-        [SerializeField] private float _targetXPositionOne;
-        [SerializeField] private float _targetXPositionTwo;
-        [SerializeField] private float _moveTime;
-
         private Transform _transform;
         private Sequence _leftRightMovementSequence;
         private ParticleColorController _particleColorController;
@@ -24,22 +20,6 @@ namespace PlatformRunner
             {
                 Debug.LogWarning("ShiningObstacle: ParticleColorController component not found");
             }
-
-            MoveBetweenTargets();
-        }
-
-
-        private void MoveBetweenTargets()
-        {
-            _leftRightMovementSequence = DOTween.Sequence();
-            _transform.SetX(_targetXPositionTwo);
-
-            _leftRightMovementSequence
-                .Append(_transform.DOMoveX(_targetXPositionOne, _moveTime));
-            _leftRightMovementSequence
-                .Append(_transform.DOMoveX(_targetXPositionTwo, _moveTime));
-
-            _leftRightMovementSequence.SetLoops(-1);
         }
 
         private void OnCollisionEnter(Collision collision)

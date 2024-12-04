@@ -4960,11 +4960,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d0f0a80b680e478a889352eb60880ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _targetXPositionOne: -4.3
-  _targetXPositionTwo: 4.7
-  _moveTime: 4
-  _halfTurnTime: 1
-  _spinReverse: 0
 --- !u!114 &1853828583
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4984,6 +4979,25 @@ MonoBehaviour:
   - {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   - {r: 1, g: 0, b: 1, a: 1}
   _particleSystem: {fileID: 615373882}
+--- !u!114 &2040389514
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4700856873100316397}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e0c6d930168c41abb169cd77f6f4192, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _isLocalMovement: 0
+  _startPosition: {x: 4.7, y: 2.36, z: -125.05}
+  _endPosition: {x: -4.3, y: 2.36, z: -125.05}
+  _movementTimeStartToEnd: 2
+  _movementTimeEndToStart: 2
+  _movementEaseStartToEnd: 1
+  _movementEaseEndToStart: 1
 --- !u!114 &6157876202829229066
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4997,10 +5011,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _isRotatingAroundY: 1
-  _reverseRotationY: 0
+  _isReverseRotationY: 0
   _yAxisRotationAmount: 360
   _yAxisRotationTime: 2
   _easeTypeY: 1
+  _isRotatingAroundZ: 0
+  _isReverseRotationZ: 0
+  _zAxisRotationAmount: 360
+  _zAxisRotationTime: 0
+  _easeTypeZ: 1
 --- !u!4 &5365789125945939031 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: fa45da5b3191648448d6d185ec4ca780, type: 3}
